@@ -1,0 +1,43 @@
+* {
+  margin: 0; padding: 0px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-image: url(../images/banner-bg.jpg);
+  background-size: cover;
+  height: 100%;
+}
+
+#form {
+  position: absolute;
+
+  .form-horizontal {
+    position: relative;
+    top: 40vh;
+  }
+}
+
+#loading {
+  visibility: hidden;
+  background-color: transparent;
+  height: 4px;
+  margin-bottom: 0;
+}
+
+#select {
+  padding-right: 0;
+}
+
+#submit {
+  padding-left: 5px;
+}
+
+a {
+  left: 90%;
+  top: -27px!important;
+  cursor: pointer;
+}
