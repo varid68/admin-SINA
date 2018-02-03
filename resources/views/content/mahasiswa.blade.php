@@ -158,7 +158,7 @@
         { data: 'gender', name: 'gender', searcable: false, orderable: false },
         { data: 'ttl', name: 'ttl', searchable: false, orderable: false },    
         { data: 'jurusan', name: 'jurusan', searcable: false, orderable: false },
-        { data: 'semester', name: 'semester' },
+        { data: 'semester', name: 'semester', searcable: false, },
         { data: 'action', name: 'action', orderable: false, searchable: false },
       ]
     });
