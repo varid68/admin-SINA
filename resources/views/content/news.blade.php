@@ -101,6 +101,7 @@
         <button type="button" class="btn btn-danger" id="close">Close</button>
       </div>
     </form><!-- END FORM INPUT NEWS -->
+
     
   </div><!-- END CONTAINER -->
 @endsection

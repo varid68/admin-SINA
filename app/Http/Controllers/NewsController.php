@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
+use OneSignal;
 
 class NewsController extends Controller
 {
@@ -37,6 +38,10 @@ class NewsController extends Controller
 			->asJson(true)
 			->post();
 
+		
+		$check_length = strlen($title) > 85 ? substr($title,0,85) : $title;
+		$notif = preg_replace('/\W\w+\s*(\W*)$/', '$1', $check_length).'...';
+		OneSignal::sendNotificationToAll($notif, $url = null, $data = null, $buttons = null, $schedule = null);
 		return redirect('/news/1');
 	}
 
@@ -47,4 +52,5 @@ class NewsController extends Controller
 
 		return redirect('/news');
 	}
+
 }
