@@ -116,10 +116,10 @@
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.jqueryui.min.js"></script>
   <script>
     $(document).on('click', '.btn-success', function() {
-      let selector = $(this).parent();
-      let nim = selector.siblings().eq(1).text();
-      let nama = selector.siblings().eq(2).text();
-      let alamat = $(this).data('alamat');
+      const selector = $(this).parent();
+      const nim = selector.siblings().eq(1).text();
+      const nama = selector.siblings().eq(2).text();
+      const alamat = $(this).data('alamat');
 
       $('.modal-nama').text(nama);
       $('.modal-nim').text(nim);
@@ -155,9 +155,9 @@
         { data: 'DT_Row_Index', width: '3%', searchable: false, orderable: false },
         { data: 'nim', name: 'nim' },
         { data: 'nama', name: 'nama' },
-        { data: 'gender', name: 'gender' },
+        { data: 'gender', name: 'gender', searcable: false, orderable: false },
         { data: 'ttl', name: 'ttl', searchable: false, orderable: false },    
-        { data: 'jurusan', name: 'jurusan' },
+        { data: 'jurusan', name: 'jurusan', searcable: false, orderable: false },
         { data: 'semester', name: 'semester' },
         { data: 'action', name: 'action', orderable: false, searchable: false },
       ]
