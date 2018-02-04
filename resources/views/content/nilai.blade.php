@@ -33,7 +33,7 @@
           <td>{{ $item["tugas"] }}</td>
           <td>{{ $item["uts"] }}</td>
           <td>{{ $item["uas"] }}</td>
-          <td>{{ $item["nilai_akhir"] }} <span style="color:#00a65a;font-weight:500">({{ $item["grade"] }})</span></td>
+          <td>{{ $item["nilai_akhir"] }} <span style="color:#FF9800;font-weight:bolder">({{ $item["grade"] }})</span></td>
           <td>
             <button type="button" class="btn btn-sm btn-success btn-modal" data-alamat="" 
               data-ta="" data-toggle="modal" data-target="#modal-detail">Detail</button>
