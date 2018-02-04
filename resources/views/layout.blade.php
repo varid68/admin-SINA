@@ -150,9 +150,9 @@
         </a>
       </li>
       <li>
-        <a href="{{ url('/nilai') }}">
+        <a href="{{ url('/input-nilai') }}">
           <i class="fa fa-pencil-square-o"></i>
-          <span data-id="nilai">Input nilai</span>
+          <span data-id="input-nilai">Input nilai</span>
         </a>
       </li>
       <li>

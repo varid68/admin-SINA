@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 
-class NilaiController extends Controller
+class InputNilaiController extends Controller
 {
 	public function index(Request $request, $page = 1) {
 		$key = $request->session()->get('key');
@@ -21,7 +21,7 @@ class NilaiController extends Controller
 			->get();
 
 		$total = ceil($response2 / 7);
-		return view('content.nilai', ['list' => $response, 'total' => $total, 'page' => $page]);
+		return view('content.inputnilai', ['list' => $response, 'total' => $total, 'page' => $page]);
 	}
 
 	public function store(Request $request) {

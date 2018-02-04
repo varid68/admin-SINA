@@ -23,8 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('key');
 
 Route::get('/point', 'PointController@index')->name('point')->middleware('key');
 
-Route::get('/nilai/{page?}', 'NilaiController@index')->middleware('key');
-Route::post('/nilai', 'NilaiController@store')->middleware('key');
+Route::get('/input-nilai/{page?}', 'InputNilaiController@index')->middleware('key');
+Route::post('/input-nilai', 'InputNilaiController@store')->middleware('key');
 
 Route::get('/mahasiswa', 'MahasiswaController@index')->middleware('key');
 Route::get('/mahasiswa-pdf', 'MahasiswaController@downloadPdf')->middleware('key');

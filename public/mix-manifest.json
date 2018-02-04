@@ -2,9 +2,9 @@
     "/js/custom/app.js": "/js/custom/app.js",
     "/css/login.css": "/css/login.css",
     "/css/news.css": "/css/news.css",
-    "/css/nilai.css": "/css/nilai.css",
+    "/css/input-nilai.css": "/css/input-nilai.css",
     "/css/mahasiswa.css": "/css/mahasiswa.css",
     "/css/app.css": "/css/app.css",
-    "/js/custom/nilai.js": "/js/custom/nilai.js",
-    "/js/custom/login.js": "/js/custom/login.js"
+    "/js/custom/login.js": "/js/custom/login.js",
+    "/js/custom/input-nilai.js": "/js/custom/input-nilai.js"
 }

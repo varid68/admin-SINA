@@ -1,6 +1,6 @@
 @extends('layout')
 @section('head')
-  <link rel="stylesheet" href="{{ asset('css/nilai.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/input-nilai.css') }}">
 @endsection
 
 @section('heading')
@@ -38,7 +38,7 @@
               <th style="width: 11.25%">Uas</th>
               <th style="width: 10%">Nilai akhir</th>
             </tr>
-            <form method="POST" action="{{ url('/nilai') }}">
+            <form method="POST" action="{{ url('/input-nilai') }}">
             {{ csrf_field() }}
             @php $no = 10 * $page - (10 - 1) @endphp
             @foreach((array) $list as $item)
@@ -82,11 +82,11 @@
         $style2 = 'unset'; @endphp
       @endif
       <ul class="pagination pagination-sm no-margin">
-        <li><a href="{{ url('nilai/'.$prev) }}" style="pointer-events:{{ $style }}">&laquo;</a></li>
+        <li><a href="{{ url('input-nilai/'.$prev) }}" style="pointer-events:{{ $style }}">&laquo;</a></li>
         @for($i=1;$i<=$total;$i++)
-        <li><a href="{{ url('nilai/'.$i) }}">{{ $i }}</a></li>
+        <li><a href="{{ url('input-nilai/'.$i) }}">{{ $i }}</a></li>
         @endfor
-        <li><a href="{{ url('nilai/'.$next) }}" style="pointer-events:{{ $style2 }}">&raquo;</a></li>
+        <li><a href="{{ url('input-nilai/'.$next) }}" style="pointer-events:{{ $style2 }}">&raquo;</a></li>
       </ul><!-- END PAGINATION -->
 
       <button type="submit" id="submit" class="btn btn-success btn-sm pull-right">Submit</button>
@@ -97,5 +97,5 @@
 @endsection
 
 @section('script')
-  <script src="{{ asset('js/custom/nilai.js') }}"></script>
+  <script src="{{ asset('js/custom/input-nilai.js') }}"></script>
 @endsection
