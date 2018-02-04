@@ -21,7 +21,7 @@ Route::get('/logout', 'LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('key');
 
-Route::get('/point', 'PointController@index')->name('point')->middleware('key');
+Route::get('/nilai', 'NilaiController@index')->name('point')->middleware('key');
 
 Route::get('/input-nilai/{page?}', 'InputNilaiController@index')->middleware('key');
 Route::post('/input-nilai', 'InputNilaiController@store')->middleware('key');

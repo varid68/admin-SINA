@@ -144,9 +144,9 @@
         </a>
       </li>
       <li>
-        <a href="{{ url('/point') }}">
+        <a href="{{ url('/nilai') }}">
           <i class="fa fa-trophy"></i>
-          <span data-id="point">Nilai</span>
+          <span data-id="nilai">Nilai</span>
         </a>
       </li>
       <li>

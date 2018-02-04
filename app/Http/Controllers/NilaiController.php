@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PointController extends Controller
+class NilaiController extends Controller
 {
   public function index() {
-		return view('content.point');
+		return view('content.nilai');
 	}
 }
