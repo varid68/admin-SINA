@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Curl;
+use PDF;
 
 class NilaiController extends Controller
 {
@@ -40,7 +41,16 @@ class NilaiController extends Controller
 			}
 		}
 
+		$request->session()->put('nilai', json_encode($list));
 		return view('content.nilai', compact('list'));
+	}
+
+
+	public function downloadPdf(Request $request) {
+		$matkul = $request->session()->get('id');
+		$nilai = json_decode($request->session()->get('nilai'));
+		$pdf = PDF::loadView('pdf.nilaipdf', compact('nilai', 'matkul'))->setPaper('a4','potrait');
+		return $pdf->stream('nilai.pdf');
 	}
 
 

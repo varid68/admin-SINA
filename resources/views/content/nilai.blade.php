@@ -8,6 +8,7 @@
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Condensed Full Width Table</h3>
+      <button class="btn btn-sm btn-warning pull-right" id="btn-modal-download">download pdf</button>
     </div>
     <!-- /.box-header -->
     <div class="box-body no-padding">
@@ -35,8 +36,7 @@
           <td>{{ $item["uas"] }}</td>
           <td>{{ $item["nilai_akhir"] }} <span style="color:#FF9800;font-weight:bolder">({{ $item["grade"] }})</span></td>
           <td>
-            <button type="button" class="btn btn-sm btn-success btn-modal" data-alamat="" 
-              data-ta="" data-toggle="modal" data-target="#modal-detail">Detail</button>
+            <button type="button" class="btn btn-sm btn-success">Edit</button>
           </td>
         </tr>
         @endforeach
@@ -46,4 +46,9 @@
   </div>
 @endsection
 @section('script')
+  <script>
+    $('#btn-modal-download').click(function() {
+      window.location = '/nilai-pdf';
+    });
+  </script>
 @endsection
