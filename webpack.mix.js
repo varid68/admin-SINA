@@ -14,6 +14,7 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js/custom')
   .js('resources/assets/js/login.js', 'public/js/custom')
   .js('resources/assets/js/input-nilai.js', 'public/js/custom')
+  .js('resources/assets/js/remidial.js', 'public/js/custom')
   .sass('resources/assets/sass/login.scss', 'public/css')
   .sass('resources/assets/sass/news.scss', 'public/css')
   .sass('resources/assets/sass/input-nilai.scss', 'public/css')

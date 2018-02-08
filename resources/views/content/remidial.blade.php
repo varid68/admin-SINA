@@ -1,6 +1,12 @@
 @extends('layout')
 @section('head')
   <link rel="stylesheet" href="{{ asset('css/mahasiswa.css') }}">
+  <style>
+    .absensi, .tugas, .uts, .uas {
+      border-radius: 4px;
+      display: none;
+    }
+  </style>
 @endsection
 
 @section('heading')
@@ -35,13 +41,33 @@
               <td>{{ $no++ }}</td>
               <td>{{ $item["nim"] }}</td>
               <td>{{ $item["nama"] }}</td>
-              <td>{{ $item["absensi"] }}</td>
-              <td>{{ $item["tugas"] }}</td>
-              <td>{{ $item["uts"] }}</td>
-              <td>{{ $item["uas"] }}</td>
-              <td>{{ $item["nilai_akhir"] }} <span style="color:red;font-weight:bolder">({{ $item["grade"] }})</span></td>
               <td>
-                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-default">Edit</button>
+                <span>{{ $item["absensi"] }}</span>
+                <input type="text" name="absensi" class="form-control input-sm input absensi" value="{{ $item['absensi'] }}" data-absensi="{{ $item['absensi'] }}" required>
+              </td>
+              <td>
+                <span>{{ $item["tugas"] }}</span>
+                <input type="text" name="tugas" class="form-control input-sm input tugas" value="{{ $item['tugas'] }}" data-tugas="{{ $item['tugas'] }}" required>                
+              </td>
+              <td>
+                <span>{{ $item["uts"] }}</span>
+                <input type="text" name="uts" class="form-control input-sm input uts" value="{{ $item['uts'] }}" data-uts="{{ $item['uts'] }}" required>                
+              </td>
+              <td>
+                <span>{{ $item["uas"] }}</span>
+                <input type="text" name="uas" class="form-control input-sm input uas" value="{{ $item['uas'] }}" data-uas="{{ $item['uas'] }}" required>                
+              </td>
+              <td class="nilai_akhir">{{ $item["nilai_akhir"] }} <span style="color:red;font-weight:bolder">({{ $item["grade"] }})</span></td>
+              <td>
+                <div class="on-edit" style="display:none">
+                  <button type="button" class="btn btn-sm btn-success save">
+                    <i class="fa fa-floppy-o"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-danger dismiss">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+                <button type="button" class="btn btn-sm btn-info">Edit</button>
               </td>
             </tr>
             @endforeach
@@ -49,53 +75,11 @@
         </div>
       </div>
 
-      <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <div class="row-container">
-                <p class="first-column">Nama lengkap : </p>
-                <p class="second-column modal-nama">Farid tanwir</p>
-              </div>
-              <div class="row-container">
-                <p class="first-column">Nim : </p>
-                <p class="second-column modal-nim">216020</p>
-              </div>
-              <div class="row-container">
-                <p class="first-column">Alamat lengkap : </p>
-                <p class="second-column modal-alamat">Kampung Tanah Baru Rt 08/09, desa Harja mekar,
-                  kec. Cikarang utara, kab. Bekasi
-                </p>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-          <!-- /.modal -->
     </div>
   </div>
 
 @endsection
 
 @section('script')
-  <script>
-    // $('button').click(function() {
-    //   let selector = $(this).parent();
-    //   let nim = $selector.siblings(".nim").text();
-    //   let nama = $selector.siblings(".nama").text();
-    //   let alamat = $selector.data('alamat');
-
-    //   $('.modal-nama').text(nama);
-    //   $('.modal-nim').text(nim);
-    //   $('.modal-alamat').text(alamat);
-    // });
-
-    $('#btn-modal-download').click(function() {
-      window.location = '/remidial-pdf';
-    });
-  </script>
-  <!-- <script src="{{ asset('js/custom/nilai.js') }}"></script> -->
+  <script src="{{ asset('js/custom/remidial.js') }}"></script>
 @endsection

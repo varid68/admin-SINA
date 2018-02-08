@@ -141,29 +141,7 @@ $(function () {
   function gradeNilai(nilai, indexElem) {
     var grade = null;
 
-    if (nilai <= 100 && nilai >= 92) {
-      grade = 'A';
-    } else if (nilai <= 91 && nilai >= 84) {
-      grade = 'A-';
-    } else if (nilai <= 83 && nilai >= 75) {
-      grade = 'B+';
-    } else if (nilai <= 74 && nilai >= 67) {
-      grade = 'B';
-    } else if (nilai <= 66 && nilai >= 59) {
-      grade = 'B-';
-    } else if (nilai <= 58 && nilai >= 50) {
-      grade = 'C+';
-    } else if (nilai <= 49 && nilai >= 42) {
-      grade = 'C';
-    } else if (nilai <= 41 && nilai >= 34) {
-      grade = 'C';
-    } else if (nilai <= 33 && nilai >= 25) {
-      grade = 'D+';
-    } else if (nilai <= 24) {
-      grade = 'D';
-    } else {
-      grade = '!!';
-    }
+    if (nilai <= 100 && nilai >= 92) grade = 'A';else if (nilai <= 91 && nilai >= 84) grade = 'A-';else if (nilai <= 83 && nilai >= 75) grade = 'B+';else if (nilai <= 74 && nilai >= 67) grade = 'B';else if (nilai <= 66 && nilai >= 59) grade = 'B-';else if (nilai <= 58 && nilai >= 50) grade = 'C+';else if (nilai <= 49 && nilai >= 42) grade = 'C';else if (nilai <= 41 && nilai >= 34) grade = 'C';else if (nilai <= 33 && nilai >= 25) grade = 'D+';else if (nilai <= 24) grade = 'D';else grade = '!!';
 
     $('input.nilai-akhir[type="hidden"]').eq(indexElem).val(nilai);
     var $selector = $('td.grade').eq(indexElem).html(nilai + '&nbsp&nbsp&nbsp' + grade);
