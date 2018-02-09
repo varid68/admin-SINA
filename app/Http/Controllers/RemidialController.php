@@ -58,6 +58,28 @@ class RemidialController extends Controller
 	}
 
 
+	public function edit(Request $request) {
+		$key = $request->session()->get('key');		
+		$data = [
+			"nim" => $request->input('nim'),
+			"id_matkul" => $request->session()->get('id'),
+			"semester" => $request->session()->get('semester'),
+			"absensi" => $request->input('absensi'),
+			"tugas" => $request->input('tugas'),
+			"uts" => $request->input('uts'),
+			"uas" => $request->input('uas'),
+			"nilai_akhir" => $request->input('nilai_akhir'),
+		];
+
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/edit/?key='.$key)
+			->withData($data)
+			->asJson(true)
+			->post();
+
+		return redirect('/remidial');
+	}
+
+
 	public function grade($nilai) {
 		$grade = NULL;
 

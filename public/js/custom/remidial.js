@@ -96,6 +96,7 @@ $(function () {
     var finalScore = Math.round(absensi + tugas + uts + uas);
     var grade = getGrade(finalScore);
     var hasil = finalScore + ' (' + grade + ')';
+    thisObject.parents('tr').find('.final-score').val(finalScore);
     thisObject.parent().siblings('.nilai_akhir').text(hasil);
   }
 
@@ -121,6 +122,7 @@ $(function () {
       $(this).parents('tr').find('.absensi, .tugas, .uts, .uas').siblings().hide();
       $(this).hide();
       $(this).siblings('.on-edit').show();
+      $(this).parents('tr').find('.absensi').focus();
       finalScoreHtml = $(this).parent().siblings('.nilai_akhir').html();
       toggle = true;
     }
@@ -136,10 +138,12 @@ $(function () {
     var tugas = $(this).parents('tr').find('.tugas').data('tugas');
     var uts = $(this).parents('tr').find('.uts').data('uts');
     var uas = $(this).parents('tr').find('.uas').data('uas');
+    var finalScore = $(this).parents('tr').find('.final-score').data('final');
     $(this).parents('tr').find('.absensi').val(absensi);
     $(this).parents('tr').find('.tugas').val(tugas);
     $(this).parents('tr').find('.uts').val(uts);
     $(this).parents('tr').find('.uas').val(uas);
+    $(this).parents('tr').find('.final-score').val(finalScore);
     $(this).parents('tr').find('.nilai_akhir').html(finalScoreHtml);
     toggle = false;
   });
@@ -162,6 +166,24 @@ $(function () {
   $('.uas').keyup(function (e) {
     uas = parseInt(40 / 100 * e.target.value);
     calculateScore($(this));
+  });
+
+  $('input').keypress(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      input = $("input[type=number]");
+      i = input.index(this);
+      if (input[i + 1] != null) {
+        next = input[i + 1];
+        next.focus();
+        next.select();
+        return false;
+      } else {
+        input[0].focus();
+        next.select();
+        return false;
+      }
+    }
   });
 });
 

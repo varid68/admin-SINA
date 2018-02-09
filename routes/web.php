@@ -35,6 +35,7 @@ Route::get('/alumni/{page?}', 'AlumniController@index')->middleware('key');
 Route::get('/alumni-pdf', 'AlumniController@downloadPdf')->middleware('key');
 
 Route::get('/remidial', 'RemidialController@index')->middleware('key');
+Route::get('/remidial/edit', 'RemidialController@edit')->middleware('key');
 Route::get('/remidial-pdf', 'RemidialController@downloadPdf')->middleware('key');
 
 Route::get('/news/{page?}', 'NewsController@index')->middleware('key');
