@@ -4,6 +4,10 @@
   <link rel="stylesheet" href="{{ asset('css/mahasiswa.css') }}">
 @endsection
 
+@section('heading')
+  Mahasiswa
+@endsection
+
 @section('content')
   <div class="row">
     <div class="col-md-12">

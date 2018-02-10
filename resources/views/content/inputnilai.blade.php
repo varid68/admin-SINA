@@ -14,10 +14,10 @@
       <div class="alert alert-info alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <ul>
-          <li>Nilai absensi didaptakan dari ((Masuk / 14) x 10 / 100) x 100</li>
-          <li>NIlai absensi max adalah 14 yang mana didapatkan dari jumlah pertemuan 1 semester</li>
+          <li>Nilai absensi diperoleh dari ((Masuk kuliah / 14) x 10 / 100) x 100</li>
+          <li>NIlai absensi max adalah 14 yang mana diperoleh dari jumlah pertemuan selama 1 semester</li>
           <li>Nilai akhir = 10% absensi + 20% tugas + 30% UTS + 40% UAS</li>
-          <li>Nilai akhir otomatis muncul setelah kolom nilai terisi semua-nya</li>
+          <li>Nilai akhir akan muncul otomatis setelah field nilai absensi, tugas, UTS & UAS terisi semua-nya</li>
         </ul>
       </div>
 
@@ -29,9 +29,9 @@
         <div class="box-body no-padding">
           <table class="table">
             <tr>
-              <th style="width: 5%">No.</th>
-              <th style="width: 15%">Nim</th>
-              <th style="width: 25%">Nama</th>
+              <th style="width: 3%">#</th>
+              <th style="width: 10%">Nim</th>
+              <th style="width: 30%">Nama</th>
               <th style="width: 11.25%">Absensi</th>
               <th style="width: 11.25%">Tugas</th>
               <th style="width: 11.25%">Uts</th>

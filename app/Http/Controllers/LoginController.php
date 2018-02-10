@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Ixudra\Curl\Facades\Curl;
+use Curl;
 
 class LoginController extends Controller
 {
@@ -14,10 +14,12 @@ class LoginController extends Controller
 				->withData( ['username' => $username, 'password' => $password ] )
 				->asJson( true )
 				->post();
-
+		
+		$dosenWithoutTitle = explode(",", $response['auth']['nama'], 2);
 		$key = $response['auth']['api_key'];
-		$nama = $response['auth']['nama'];
-		$request->session()->put('dosen', $nama);
+		$dosen = $response['auth']['nama'];
+		$request->session()->put('dosen', $dosen);
+		$request->session()->put('dosenWithoutTitle', $dosenWithoutTitle[0]);
 		$request->session()->put('key', $key);
 		return response()->json($response);
 	}
@@ -26,7 +28,7 @@ class LoginController extends Controller
 		$json = json_decode($object);
 		$request->session()->put('id', $json->id);
 		$request->session()->put('semester', $json->semester);
-		return redirect('/nilai');
+		return redirect('/news/1');
 	}
 
 	public function logout(Request $request) {
