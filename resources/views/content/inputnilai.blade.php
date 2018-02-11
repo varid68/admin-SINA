@@ -27,7 +27,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
-          <table class="table">
+          <table class="table table-condensed">
             <tr>
               <th style="width: 3%">#</th>
               <th style="width: 10%">Nim</th>
@@ -40,23 +40,23 @@
             </tr>
             <form method="POST" action="{{ url('/input-nilai') }}">
             {{ csrf_field() }}
-            @php $no = 10 * $page - (10 - 1) @endphp
+            @php $no = 1 @endphp
             @foreach((array) $list as $item)
             <tr>
               <td>{{ $no++ }}</td>
               <td>{{ $item->nim }}</td>
               <td>{{ $item->nama }}</td>
               <td>
-                <input type="text" name="{{ $item->nim }}[absensi]" class="form-control input-sm input absensi" placeholder=".col-xs-3" required>
+                <input type="number" min="1" max="14" name="{{ $item->nim }}[absensi]" class="form-control input-sm input absensi" placeholder=".col-xs-3" required>
               </td>
               <td>
-                <input type="text" name="{{ $item->nim }}[tugas]" class="form-control input-sm input tugas" placeholder=".col-xs-3" required>
+                <input type="number" min="1" max="100" name="{{ $item->nim }}[tugas]" class="form-control input-sm input tugas" placeholder=".col-xs-3" required>
               </td>
               <td>
-                <input type="text" name="{{ $item->nim }}[uts]" class="form-control input-sm input uts" placeholder=".col-xs-3" required>
+                <input type="number" min="1" max="100" name="{{ $item->nim }}[uts]" class="form-control input-sm input uts" placeholder=".col-xs-3" required>
               </td>
               <td>
-                <input type="text" name="{{ $item->nim }}[uas]" class="form-control input-sm input uas" placeholder=".col-xs-3" required>
+                <input type="number" min="1" max="100" name="{{ $item->nim }}[uas]" class="form-control input-sm input uas" placeholder=".col-xs-3" required>
                 <input type="hidden" name="{{ $item->nim }}[nilai_akhir]" class="nilai-akhir">
               </td>
               <td class="grade">-----</td>
@@ -66,30 +66,11 @@
         </div>
       </div><!-- END TABLE CONTAINER -->
 
-      @if ($page > 1)
-        @php $prev = $page - 1;
-        $style = 'unset'; @endphp
+      @if (count($list) > 1)
+        <button type="submit" id="submit" class="btn btn-success btn-sm pull-right">Submit</button>
       @else
-        @php $prev = 1;
-        $style = 'none' @endphp
+        <marquee>Semua nilai mahasiswa telah di input!!</marquee>
       @endif
-
-      @if ($page == $total)
-        @php $next = $page;
-        $style2 = 'none'; @endphp
-      @else
-        @php $next = $page + 1;
-        $style2 = 'unset'; @endphp
-      @endif
-      <ul class="pagination pagination-sm no-margin">
-        <li><a href="{{ url('input-nilai/'.$prev) }}" style="pointer-events:{{ $style }}">&laquo;</a></li>
-        @for($i=1;$i<=$total;$i++)
-        <li><a href="{{ url('input-nilai/'.$i) }}">{{ $i }}</a></li>
-        @endfor
-        <li><a href="{{ url('input-nilai/'.$next) }}" style="pointer-events:{{ $style2 }}">&raquo;</a></li>
-      </ul><!-- END PAGINATION -->
-
-      <button type="submit" id="submit" class="btn btn-success btn-sm pull-right">Submit</button>
       </form><!-- END FORM INPUT NILAI -->
 
     </div><!-- END COL-MD-12 -->

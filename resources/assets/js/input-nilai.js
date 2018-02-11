@@ -8,15 +8,6 @@ $(function () {
     $('input').eq(1).focus();
   }());
 
-  (function addClassActive() {
-    const split = location.href.split('/');
-    const page = split.length > 4 ? split[4] : 1;
-    $('ul.pagination').find('li a').each(function () {
-      let parents = $(this).parents('li');
-      $(this).text() == page ? parents.addClass('active') : parents.removeClass('active');
-    });
-  }());
-
   // membuat array kosong untuk menghitung nilai akhir
   (function createEmptyArray() {
     let length = $('tr').length - 1;
@@ -27,9 +18,9 @@ $(function () {
 
   // menghitung nilai absensi 
   $('.absensi').keyup(function (e) {
-    let Hasil = ((e.target.value / 14) * 10 / 100) * 100;
+    const Hasil = ((e.target.value / 14) * 10 / 100) * 100;
     absensi = parseInt(Hasil.toFixed(2));
-    var indexElem = $('.absensi').index(this);
+    const indexElem = $('.absensi').index(this);
     hasilAkhir[indexElem][0] = absensi;
   });
 
@@ -37,23 +28,22 @@ $(function () {
   // menghitung nilai tugas 30%
   $('.tugas').keyup(function (e) {
     tugas = parseInt(20 / 100 * e.target.value);
-    var indexElem = $('.tugas').index(this);
+    const indexElem = $('.tugas').index(this);
     hasilAkhir[indexElem][1] = tugas;
   });
-
 
   //menghitung nilai uts 30%
   $('.uts').keyup(function (e) {
     uts = parseInt(30 / 100 * e.target.value);
-    var indexElem = $('.uts').index(this);
+    const indexElem = $('.uts').index(this);
     hasilAkhir[indexElem][2] = uts;
   });
 
   // menghitung nilai uas 40%
   $('.uas').keyup(function (e) {
     uas = parseInt(40 / 100 * e.target.value);
-    var indexElem = $('.uas').index(this);
-    var i = hasilAkhir[indexElem][0] + hasilAkhir[indexElem][1] + hasilAkhir[indexElem][2] + uas;
+    const indexElem = $('.uas').index(this);
+    const i = hasilAkhir[indexElem][0] + hasilAkhir[indexElem][1] + hasilAkhir[indexElem][2] + uas;
     if (e.target.value != '') gradeNilai(i, indexElem);
   });
 
@@ -74,14 +64,14 @@ $(function () {
     else grade = '!!'
 
     $('input.nilai-akhir[type="hidden"]').eq(indexElem).val(nilai);
-    var $selector = $('td.grade').eq(indexElem).html(nilai + '&nbsp&nbsp&nbsp' + grade);
-    nilai < 59 ? $selector.css('color', 'red') : $selector.css('color', 'black');
+    const selector = $('td.grade').eq(indexElem).html(nilai + '&nbsp&nbsp&nbsp' + grade);
+    nilai < 59 ? selector.css('color', 'red') : selector.css('color', 'black');
   }
 
   // pindah textbox saat enter
   $('input').keypress(function (e) {
     if (e.keyCode == 13) {
-      input = $("input[type=text]");
+      input = $("input[type=number]");
       i = input.index(this);
       if (input[i + 1] != null) {
         next = input[i + 1];

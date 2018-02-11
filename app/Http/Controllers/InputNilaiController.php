@@ -10,18 +10,29 @@ class InputNilaiController extends Controller
 	public function index(Request $request, $page = 1) {
 		$key = $request->session()->get('key');
 		$semester = $request->session()->get('semester');
-		$offset = ($page -1) * 10;
+		$id_matkul = $request->session()->get('id');
+		// $offset = ($page -1) * 10;
 
-		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&offset='.$offset)
+		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&offset=none')
 			->asJson()
 			->get();
 
-		$response2 = Curl::to('https://chylaceous-thin.000webhostapp.com/public/count-mahasiswa/?key='.$key.'&semester='.$semester)
+		$nilai = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/?key='.$key.'&semester='.$semester.'&id_matkul='.$id_matkul)
 			->asJson()
 			->get();
 
-		$total = ceil($response2 / 7);
-		return view('content.inputnilai', ['list' => $response, 'total' => $total, 'page' => $page]);
+		$list = [];
+
+		foreach ((array) $mahasiswa as $item) {
+			$counter = 0;
+			foreach ((array) $nilai as $value) {
+				if ($item->nim != $value->nim) $counter++;
+				if ($counter == count($nilai)) array_push($list, $item);
+			}
+		}
+
+		// $total = ceil($response2 / 7);
+		return view('content.inputnilai',compact('list', 'total', 'page'));
 	}
 
 	public function store(Request $request) {
@@ -33,8 +44,6 @@ class InputNilaiController extends Controller
 		
 		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/?key='.$key.'&id='.$id_matkul.'&semester='.$semester)
         ->withData($input)
-        // ->asJson()
         ->post();
-		dd($response);
 	}
 }
