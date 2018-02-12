@@ -1,6 +1,14 @@
 @extends('layout')
 @section('head')
   <link rel="stylesheet" href="{{ asset('css/mahasiswa.css') }}">
+  <style>
+    #modal-edit .form-control {
+      border-radius: 3px;
+    }
+    #modal-edit .row {
+      margin-bottom: 10px;
+    }
+  </style>
 @endsection
 
 @section('heading')
@@ -14,18 +22,21 @@
         <div class="box-header">
           <h3 class="box-title">List alumni mahasiswa amik</h3>
           <button class="btn btn-sm btn-warning pull-right" id="btn-modal-download">download pdf</button>
+          @if (Session::get('id') == 'super-admin')
+          <button class="btn bg-purple btn-sm pull-right" style="margin-right:5px" id="btn-modal-d">upload excel</button>
+          @endif
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
           <table class="table table-hover">
             <tr>
-              <th style="width: 3%">No.</th>
-              <th style="width: 8%">Nim</th>
+              <th style="width: 3%">#</th>
+              <th style="width: 7%">Nim</th>
               <th style="width: 22%">Nama</th>
               <th style="width: 10%">Gender</th>
               <th style="width: 15%">TTl</th>
               <th style="width: 15%">Jurusan</th>
-              <th style="width: 10%">Option</th>
+              <th style="width: 11%">Option</th>
             </tr>
 
             @php $no = 10 * $page - (10 - 1) @endphp
@@ -40,6 +51,9 @@
               <td>
                 <button type="button" class="btn btn-sm btn-success btn-modal" data-alamat="{{$item->alamat}}" 
                   data-ta="{{$item->judul_ta}}" data-toggle="modal" data-target="#modal-detail">Detail</button>
+                @if (Session::get('id') == 'super-admin')
+                <button type="button" class="btn bg-maroon btn-sm btn-modal-edit" data-toggle="modal" data-target="#modal-edit">Edit</button>
+                @endif
               </td>
             </tr>
             @endforeach
@@ -103,6 +117,79 @@
         </div>
       </div>
 
+
+    <div class="modal fade" id="modal-edit">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row-container">
+              <p class="first-column">Nim : </p>
+              <p class="second-column nim">216020</p>
+            </div>
+
+            <div class="row">
+              <p class="col-md-3 text-right">Nama lengkap : </p>
+              <div class="col-md-3 no-padding">
+                <input type="text" name="nama" class="form-control input-sm" required autofocus>
+              </div>
+              <p class="col-md-3 text-right">Gender : </p>
+              <div class="col-md-3">
+                <select name="gender" class="form-control input-sm">
+                  <option selected disabled>-- Options --</option>
+                  <option value="laki-laki">Laki laki</option>
+                  <option value="perempuan">Perempuan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <p class="col-md-3 text-right">Tempat, tgl lahir : </p>
+              <div class="col-md-3 no-padding">
+                <input type="text" name="ttl" class="form-control input-sm" required autofocus>              
+              </div>
+            </div>
+
+            <div class="row">
+              <p class="col-md-3 text-right">Alamat : </p>
+              <div class="col-md-6 no-padding">
+                <textarea name="alamat" class="form-control" rows="3" required></textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <p class="col-md-3 text-right">Jurusan : </p>
+              <div class="col-md-3 no-padding">
+                <select name="jurusan" class="form-control input-sm">
+                  <option selected disabled>-- Options --</option>
+                  <option value="Manajemen Informatika">Manajemen Informatika</option>
+                  <option value="Komputerisasi Akuntansi">Komputerisasi Akuntansi</option>
+                </select>
+              </div>
+              <p class="col-md-3 text-right">Tahun masuk : </p>
+              <div class="col-md-3">
+                <select name="tahun_masuk" class="form-control input-sm">
+                  @for ($i = 2014;$i < 2020;$i++)
+                  <option value="{{ $i }}">{{ $i }}</option>
+                  @endfor
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <p class="col-md-3 text-right">Judul tugas akhir : </p>
+              <div class="col-md-6 no-padding">
+                <textarea name="judul_ta" class="form-control" rows="6" required></textarea>              
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger pull-right" style="margin-left:10px" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
       <div class="modal fade" id="modal-filter">
         <div class="modal-dialog modal-sm">
@@ -198,6 +285,27 @@
       }
 
       window.location = `/alumni-pdf?start=${start}&end=${end}&jurusan=${jurusan}`;
+    });
+
+    $('.btn-modal-edit').click(function() {
+      const nim = $(this).parent().siblings().eq(1).text();
+      const nama = $(this).parent().siblings().eq(2).text();
+      const gender = $(this).parent().siblings().eq(3).text();
+      const ttl = $(this).parent().siblings().eq(4).text();
+      const alamat = $(this).siblings().data('alamat');
+      const jurusan = $(this).parent().siblings().eq(5).text();
+      const tahun_masuk = 2015;
+      const judul_ta = $(this).siblings().data('ta');
+
+
+      $('#modal-edit .nim').text(nim);
+      $('#modal-edit').find('input[name=nama]').val(nama);
+      $('#modal-edit').find('select[name=gender]').val(gender);
+      $('#modal-edit').find('input[name=ttl]').val(ttl);
+      $('#modal-edit').find('textarea[name=alamat]').val(alamat);
+      $('#modal-edit').find('select[name=jurusan]').val(jurusan);
+      $('#modal-edit').find('select[name=tahun_masuk]').val(tahun_masuk);
+      $('#modal-edit').find('textarea[name=judul_ta]').val(judul_ta);
     });
   </script>
   <!-- <script src="{{ asset('js/custom/nilai.js') }}"></script> -->
