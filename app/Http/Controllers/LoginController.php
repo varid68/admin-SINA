@@ -15,12 +15,14 @@ class LoginController extends Controller
 				->asJson( true )
 				->post();
 		
-		$dosenWithoutTitle = explode(",", $response['auth']['nama'], 2);
-		$key = $response['auth']['api_key'];
-		$dosen = $response['auth']['nama'];
-		$request->session()->put('dosen', $dosen);
-		$request->session()->put('dosenWithoutTitle', $dosenWithoutTitle[0]);
-		$request->session()->put('key', $key);
+		if ($response != 'Wrong Password') {
+			$dosenWithoutTitle = explode(",", $response['auth']['nama'], 2);
+			$key = $response['auth']['api_key'];
+			$dosen = $response['auth']['nama'];
+			$request->session()->put('dosen', $dosen);
+			$request->session()->put('dosenWithoutTitle', $dosenWithoutTitle[0]);
+			$request->session()->put('key', $key);
+		}
 		return response()->json($response);
 	}
 	

@@ -11,24 +11,28 @@ $(function () {
     interval = setInterval(function () {
       $('.progress-bar').css('width', width + '%');
       width = width < 100 ? width + 10 : 10;
-      console.log(width);
     }, 1000);
   }
 
   function onSuccess(data) {
+    const object = `{"id":"super-admin","semester":"none"}`;
+
     if (data != 'Wrong Password') {
-      $('#select select').prop('disabled', false);
-      $.each(data.matkul, function (index, value) {
-        let val = {
-          id: value.id_matkul,
-          semester: value.semester,
-        }
-        let json = JSON.stringify(val);
-        $('select')
-          .append($("<option></option>")
-            .attr("value", json)
-            .text(value.mata_kuliah));
-      });
+      if (data.auth.nama == 'super-admin') window.location = '/login/'+object;
+      else {
+        $('#select select').prop('disabled', false);
+        $.each(data.matkul, function (index, value) {
+          let val = {
+            id: value.id_matkul,
+            semester: value.semester,
+          }
+          let json = JSON.stringify(val);
+          $('select')
+            .append($("<option></option>")
+              .attr("value", json)
+              .text(value.mata_kuliah));
+        });
+      }
     } else alert('Kombinasi username & password salah!');
 
     clearInterval(interval);

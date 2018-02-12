@@ -50,7 +50,7 @@
               </td>
               <td>{{ $item->author }}</td>
               <td data-id="{{ $item->id }}" data-image="{{ $item->image_name }}">
-                <button type="button" class="delete" class="btn btn-sm btn-danger">
+                <button type="button" class="btn btn-sm btn-danger delete">
                   Hapus
                 </button>
               </td>

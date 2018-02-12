@@ -125,6 +125,7 @@
           <span data-id="alumni">Alumni</span>
         </a>
       </li>
+      @if (Session::get('id') != 'super-admin')
       <li>
         <a href="{{ url('/nilai') }}">
           <i class="fa fa-trophy"></i>
@@ -143,6 +144,7 @@
           <span data-id="remidial">Remidial</span>
         </a>
       </li>
+      @endif
     </ul>
   </section>
     <!-- /.sidebar -->
