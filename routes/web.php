@@ -30,8 +30,9 @@ Route::middleware('key')->group(function() {
   Route::get('/mahasiswa/datatable', 'MahasiswaController@datatable')->name('ajax datatable');
   
   Route::get('/alumni/{page?}', 'AlumniController@index')->name('list all alumni');
-  Route::get('/alumni-pdf', 'AlumniController@downloadPdf')->name('download alumni list');
-  Route::post('/alumni', 'AlumniController@store')->name('update alumni');
+  Route::get('/alumni-pdf', 'AlumniController@downloadPdf')->name('download alumni as pdf');
+  Route::post('/alumni', 'AlumniController@update')->name('update alumni');
+  Route::get('/alumni-excel', 'AlumniController@downloadExcel')->name('donwload alumni as excel');
   
   Route::get('/nilai', 'NilaiController@index')->name('list of students score');
   Route::get('/nilai-pdf', 'NilaiController@downloadPdf')->name('download students score');

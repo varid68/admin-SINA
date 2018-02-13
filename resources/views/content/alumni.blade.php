@@ -23,7 +23,8 @@
           <h3 class="box-title">List alumni mahasiswa amik</h3>
           <button class="btn btn-sm btn-warning pull-right" id="btn-modal-download">download pdf</button>
           @if (Session::get('id') == 'super-admin')
-          <button class="btn bg-purple btn-sm pull-right" style="margin-right:5px" id="btn-modal-d">upload excel</button>
+          <button class="btn btn-sm btn-info pull-right" style="margin-right:5px" id="download-excel">download excel</button>
+          <button class="btn bg-purple btn-sm pull-right" style="margin-right:5px" id="upload-excel">upload excel</button>
           @endif
         </div>
         <!-- /.box-header -->
@@ -320,6 +321,10 @@
       $('#modal-edit').find('select[name=jurusan]').val(jurusan);
       $('#modal-edit').find('select[name=tahun_masuk]').val(tahun_masuk);
       $('#modal-edit').find('textarea[name=judul_ta]').val(judul_ta);
+    });
+
+    $('#download-excel').click(function() {
+      window.location = '/alumni-excel';
     });
   </script>
   <!-- <script src="{{ asset('js/custom/nilai.js') }}"></script> -->
