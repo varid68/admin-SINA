@@ -50,7 +50,7 @@
               <td>{{ $item->jurusan }}</td>
               <td>
                 <button type="button" class="btn btn-sm btn-success btn-modal" data-alamat="{{$item->alamat}}" 
-                  data-ta="{{$item->judul_ta}}" data-toggle="modal" data-target="#modal-detail">Detail</button>
+                  data-ta="{{$item->judul_ta}}" data-masuk="{{$item->tahun_masuk}}" data-toggle="modal" data-target="#modal-detail">Detail</button>
                 @if (Session::get('id') == 'super-admin')
                 <button type="button" class="btn bg-maroon btn-sm btn-modal-edit" data-toggle="modal" data-target="#modal-edit">Edit</button>
                 @endif
@@ -98,6 +98,10 @@
                 <p class="second-column modal-nim">216020</p>
               </div>
               <div class="row-container">
+                <p class="first-column">Jurusan : </p>
+                <p class="second-column modal-jurusan">Ti</p>
+              </div>
+              <div class="row-container">
                 <p class="first-column">Alamat lengkap : </p>
                 <p class="second-column modal-alamat">Kampung Tanah Baru Rt 08/09, desa Harja mekar,
                   kec. Cikarang utara, kab. Bekasi
@@ -121,10 +125,14 @@
     <div class="modal fade" id="modal-edit">
       <div class="modal-dialog">
         <div class="modal-content">
+          <form action="{{ url('/alumni') }}" method="POST">
+          {{ csrf_field() }}
+
           <div class="modal-body">
             <div class="row-container">
               <p class="first-column">Nim : </p>
               <p class="second-column nim">216020</p>
+              <input type="hidden" name="nim" value="">
             </div>
 
             <div class="row">
@@ -168,7 +176,7 @@
               <p class="col-md-3 text-right">Tahun masuk : </p>
               <div class="col-md-3">
                 <select name="tahun_masuk" class="form-control input-sm">
-                  @for ($i = 2014;$i < 2020;$i++)
+                  @for ($i=2010;$i<2015;$i++)
                   <option value="{{ $i }}">{{ $i }}</option>
                   @endfor
                 </select>
@@ -181,12 +189,14 @@
                 <textarea name="judul_ta" class="form-control" rows="6" required></textarea>              
               </div>
             </div>
+            
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-danger pull-right" style="margin-left:10px" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-sm btn-success pull-right" data-dismiss="modal">Save</button>
+            <button type="submit" class="btn btn-sm btn-success pull-right">Save</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -258,12 +268,15 @@
 
     $('.btn-modal').click(function() {
       const nim = $(this).parent().siblings().eq(1).text();
-      const nama = $(this).parent().siblings().eq(2).text()
+      const nama = $(this).parent().siblings().eq(2).text();
+      const jurusan = $(this).parent().siblings().eq(5).text();
+      const tahun_masuk = $(this).data('masuk');
       const alamat = $(this).data('alamat');
       const ta = $(this).data('ta');
 
       $('.modal-nama').text(nama);
       $('.modal-nim').text(nim);
+      $('.modal-jurusan').text(`${jurusan}/${tahun_masuk}`);
       $('.modal-alamat').text(alamat);
       $('.modal-ta').text(ta);
     });
@@ -294,11 +307,12 @@
       const ttl = $(this).parent().siblings().eq(4).text();
       const alamat = $(this).siblings().data('alamat');
       const jurusan = $(this).parent().siblings().eq(5).text();
-      const tahun_masuk = 2015;
+      const tahun_masuk = $(this).siblings().data('masuk');
       const judul_ta = $(this).siblings().data('ta');
 
 
       $('#modal-edit .nim').text(nim);
+      $('#modal-edit').find('input[name=nim]').val(nim);
       $('#modal-edit').find('input[name=nama]').val(nama);
       $('#modal-edit').find('select[name=gender]').val(gender);
       $('#modal-edit').find('input[name=ttl]').val(ttl);

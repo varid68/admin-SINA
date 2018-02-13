@@ -31,6 +31,7 @@ Route::middleware('key')->group(function() {
   
   Route::get('/alumni/{page?}', 'AlumniController@index')->name('list all alumni');
   Route::get('/alumni-pdf', 'AlumniController@downloadPdf')->name('download alumni list');
+  Route::post('/alumni', 'AlumniController@store')->name('update alumni');
   
   Route::get('/nilai', 'NilaiController@index')->name('list of students score');
   Route::get('/nilai-pdf', 'NilaiController@downloadPdf')->name('download students score');

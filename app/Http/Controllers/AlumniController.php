@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Ixudra\Curl\Facades\Curl;
+use Curl;
 use PDF;
 
 class AlumniController extends Controller
@@ -22,6 +22,19 @@ class AlumniController extends Controller
 
 		$total = ceil($response2 / 7);
 		return view('content.alumni', compact('list', 'total', 'page'));
+	}
+
+	public function store(Request $request) {
+		$key = $request->session()->get('key');		
+		$input = $request->input();
+		$nim = $request->input('nim');
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/alumni/'.$nim.'/?key='.$key)
+        ->withData($input)
+				->post();
+				
+		$res = json_decode($response);
+		if ($res->status == 'success') return redirect('/alumni');
+		else dd('gagal menyimpan');
 	}
 
 	public function downloadPdf(Request $request) {
