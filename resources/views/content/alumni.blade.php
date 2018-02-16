@@ -17,6 +17,16 @@
 
 @section('content')
   <div class="row">
+    <form action="{{ URL('alumni/excel/import') }}" id="form-upload" method="POST" enctype="multipart/form-data" style="display:none">
+      <div class="col-md-offset-6 col-md-4">
+        {{csrf_field()}}
+        <input type="file" name="imported-file" required/>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-sm btn-primary pull-right" style="padding:4px;margin-bottom:5px" type="submit">Import</button>
+      </div>
+    </form>
+
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header">
@@ -25,6 +35,7 @@
           @if (Session::get('id') == 'super-admin')
           <button class="btn btn-sm btn-info pull-right" style="margin-right:5px" id="download-excel">download excel</button>
           <button class="btn bg-purple btn-sm pull-right" style="margin-right:5px" id="upload-excel">upload excel</button>
+          <button class="btn bg-purple btn-sm pull-right" style="margin-right:5px" id="move-students">Pindahkan</button>
           @endif
         </div>
         <!-- /.box-header -->
@@ -325,6 +336,10 @@
 
     $('#download-excel').click(function() {
       window.location = '/alumni-excel';
+    });
+
+    $('#upload-excel').click(function() {
+      $('#form-upload').toggle('300');
     });
   </script>
   <!-- <script src="{{ asset('js/custom/nilai.js') }}"></script> -->

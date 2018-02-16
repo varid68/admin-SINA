@@ -33,6 +33,8 @@ Route::middleware('key')->group(function() {
   Route::get('/alumni-pdf', 'AlumniController@downloadPdf')->name('download alumni as pdf');
   Route::post('/alumni', 'AlumniController@update')->name('update alumni');
   Route::get('/alumni-excel', 'AlumniController@downloadExcel')->name('donwload alumni as excel');
+  Route::post('/alumni/excel/import', 'AlumniController@importExcel')->name('donwload alumni as excel');
+  Route::get('/alumni-move', 'AlumniController@moveToAlumni')->name('donwload alumni as excel');
   
   Route::get('/nilai', 'NilaiController@index')->name('list of students score');
   Route::get('/nilai-pdf', 'NilaiController@downloadPdf')->name('download students score');

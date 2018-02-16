@@ -61,7 +61,7 @@ class AlumniController extends Controller
 	}
 
 	public function downloadExcel(Request $request) {
-		$key = $request->session()->get('key');	
+		$key = $request->session()->get('key');
 		$list = Curl::to('https://chylaceous-thin.000webhostapp.com/public/alumni/?key='.$key.'&offset=none')
 			->asJson()
 			->get();
@@ -77,20 +77,17 @@ class AlumniController extends Controller
 		return Excel::create('mahasiswa', function($excel) use ($new_data){      
       $excel->sheet('sheet 1', function($sheet) use ($new_data){
 				$sheet->fromArray($new_data, null, 'A0', true);
-				$sheet->prependRow(['']);
-				$sheet->prependRow(2, ['#', 'nim', 'nama', 'judul tugas akhir']);
-        $sheet->prependRow(['List alumni amik al-muslim']);
+				$sheet->prependRow(1, ['#', 'nim', 'nama', 'judul tugas akhir']);
 
-        $sheet->mergeCells('A1:D1');
         $sheet->setWidth(['A' => 5, 'B' => 14, 'C' => 20, 'D' => 35]);
 
-        $sheet->cells('A3:D3', function($cells){
+        $sheet->cells('A1:D1', function($cells){
           $cells->setFontWeight('bold');
 				});
 
-				$total = count($new_data) + 4;
-				$for_nim = 'B4:B'.$total;
-				$for_number = 'A4:A'.$total;
+				$total = count($new_data) + 1;
+				$for_nim = 'B2:B'.$total;
+				$for_number = 'A2:A'.$total;
 				$sheet->cells("$for_nim", function($cells){
           $cells->setAlignment('left');
 				});
@@ -103,5 +100,28 @@ class AlumniController extends Controller
       });
 
     })->download('xlsx');
+	}
+
+	public function importExcel(Request $request) {
+		if($request->hasFile('imported-file')){
+			Excel::load($request->file('imported-file')->getRealPath(), function ($reader) {
+				$input = [];
+        foreach ($reader->toArray() as $row) {
+					$excel = [$row["nim"] => $row["judul_tugas_akhir"]];
+					array_push($input, $excel);
+				}
+				$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/submit-judulta')
+        ->withData($input)
+				->post();
+				dd($response);
+			});
+		}
+	}
+
+	public function moveToAlumni(Request $request) {
+		$key = $request->session()->get('key');	
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/move-mahasiswa/?key='.$key)
+			->asJson()
+			->get();
 	}
 }
