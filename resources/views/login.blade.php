@@ -27,13 +27,13 @@
 
           <div class="form-group">
             <div class="col-md-5">
-              <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+              <input type="text" class="form-control password" name="username" placeholder="Username" required autofocus>
             </div>
           </div>
 
           <div class="form-group">
             <div class="col-md-5">
-              <input type="password" class="form-control" name="password" placeholder="Password" required>
+              <input type="password" class="form-control username" name="password" placeholder="Password" required>
               <a type="button" class="glyphicon glyphicon-eye-close"></a>
             </div>
           </div>
@@ -52,10 +52,22 @@
         </form>
       </div>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p style="font-size: 16px; text-align: center">Silahkan pilih mata kuliah terlebih dahulu...!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 {{-- script jquery-ripples --}}
 <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/custom/login.js') }}"></script>
 </body>
 </html>

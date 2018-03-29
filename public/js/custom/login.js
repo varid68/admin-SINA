@@ -107,6 +107,11 @@ $(function () {
           $('select').append($("<option></option>").attr("value", json).text(value.mata_kuliah));
         });
       }
+      $('#myModal').modal('show');
+      $('#myModal').delay(2000).fadeOut(450);
+      setTimeout(function () {
+        $('#myModal').modal('hide');
+      }, 2500);
     } else alert('Kombinasi username & password salah!');
 
     clearInterval(interval);
@@ -114,6 +119,11 @@ $(function () {
   }
 
   $('.btn-submit').click(function (e) {
+    var username = $('.username').val();
+    var password = $('.password').val();
+
+    if (username == '' || password == '') return false;
+
     $('#loading').css('visibility', 'visible');
     intervalLoading();
 

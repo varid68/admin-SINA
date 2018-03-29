@@ -33,6 +33,11 @@ $(function () {
               .text(value.mata_kuliah));
         });
       }
+      $('#myModal').modal('show');
+      $('#myModal').delay(2000).fadeOut(450);
+      setTimeout(() => {
+        $('#myModal').modal('hide');
+      }, 2500);
     } else alert('Kombinasi username & password salah!');
 
     clearInterval(interval);
@@ -40,6 +45,11 @@ $(function () {
   }
   
   $('.btn-submit').click(function(e) {
+    const username = $('.username').val();
+    const password = $('.password').val();
+
+    if (username == '' || password == '') return false;
+
     $('#loading').css('visibility', 'visible');
     intervalLoading();
 
