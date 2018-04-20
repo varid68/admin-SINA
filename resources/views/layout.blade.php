@@ -67,7 +67,7 @@
                 <img src="{{ asset('images/user2-160x160.png') }}" class="img-circle" alt="User Image">
                 
                 <p>
-                  {{ Session::get('dosenWithoutTitle') }} - Web Developer
+                  {{ Session::get('dosenWithoutTitle') }} - {{ Session::get('mata_kuliah') }}
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -101,52 +101,58 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
+        @if (Session::get('id') != 'admin')
         <li>
-          <a href="{{ url('/home') }}">
-          <i class="fa fa-home"></i>
-          <span data-id="home">Home</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ url('/news/1') }}">
-          <i class="fa fa-bullhorn"></i>
-          <span data-id="news">News</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ url('/mahasiswa') }}">
-          <i class="fa fa-user-circle-o"></i>
-          <span data-id="mahasiswa">Mahasiswa</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ url('/alumni') }}">
-          <i class="fa fa-graduation-cap"></i>
-          <span data-id="alumni">Alumni</span>
-        </a>
-      </li>
-      @if (Session::get('id') != 'super-admin')
-      <li>
-        <a href="{{ url('/nilai') }}">
-          <i class="fa fa-trophy"></i>
-          <span data-id="nilai">Nilai</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ url('/input-nilai') }}">
-          <i class="fa fa-pencil-square-o"></i>
-          <span data-id="input-nilai">Input nilai</span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ url('/remidial') }}">
-          <i class="fa fa-refresh"></i>
-          <span data-id="remidial">Remidial</span>
-        </a>
-      </li>
-      @endif
-    </ul>
-  </section>
+          <a href="{{ url('/nilai') }}">
+            <i class="fa fa-trophy"></i>
+            <span data-id="nilai">Nilai</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/input-nilai') }}">
+            <i class="fa fa-pencil-square-o"></i>
+            <span data-id="input-nilai">Input nilai</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/remidial') }}">
+            <i class="fa fa-refresh"></i>
+            <span data-id="remidial">Remidial</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/tampilschedule') }}">
+            <i class="fa fa-calculator"></i>
+            <span data-id="hitungipk">Hitung IP</span>
+          </a>
+        </li>
+        @endif
+        <li>
+          <a href="{{ url('/mahasiswa') }}">
+            <i class="fa fa-user-circle-o"></i>
+            <span data-id="mahasiswa">Mahasiswa</span>
+          </a>
+        </li>
+        <!-- <li>
+          <a href="{{ url('/alumni') }}">
+            <i class="fa fa-graduation-cap"></i>
+            <span data-id="alumni">Alumni</span>
+          </a>
+        </li> -->
+        <li>
+          <a href="{{ url('/news/1') }}">
+            <i class="fa fa-bullhorn"></i>
+            <span data-id="news">News</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/news/1') }}">
+            <i class="fa fa-thumbs-o-up"></i>
+            <span data-id="news">Student's feedback</span>
+          </a>
+        </li>
+      </ul>
+    </section>
     <!-- /.sidebar -->
   </aside>
   

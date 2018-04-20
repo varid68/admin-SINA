@@ -30,7 +30,10 @@ class LoginController extends Controller
 		$json = json_decode($object);
 		$request->session()->put('id', $json->id);
 		$request->session()->put('semester', $json->semester);
-		return redirect('/news/1');
+		$request->session()->put('mata_kuliah', $json->mata_kuliah);
+
+		$redirect = $json->id == 'admin' ? 'news/1' : 'nilai';
+		return redirect("/$redirect");
 	}
 
 	public function logout(Request $request) {

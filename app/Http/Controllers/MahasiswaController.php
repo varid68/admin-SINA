@@ -25,13 +25,18 @@ class MahasiswaController extends Controller
 				->addIndexColumn()
 				->addColumn('jurusan', function($response){
 					return 
-						"$response->jurusan".'/'."$response->tahun_masuk";
+						$this->shorter($response->jurusan).'/'."$response->tahun_masuk";
 				})
 				->addColumn('action',function($response){
           return 
             '<button type="button" class="btn btn-sm btn-success" data-alamat="'.$response->alamat.'" data-toggle="modal" data-target="#modal-default">Detail</button>';
 				})->make(true);
 		}
+	}
+
+	public function shorter($jurusan) {
+		$result = $jurusan == 'Manajemen Informatika' ? 'MI' : 'KA';
+		return $result;
 	}
 
 	public function downloadPdf(Request $request) {

@@ -11,3 +11,15 @@
   margin-bottom: 20px;
 }
 
+#close {
+  opacity: unset;
+  top: -20px;
+  right: -20px;
+  color: tomato;
+  font-size: 50px;
+}
+
+#close:hover {
+  color: slategray;
+}
+

@@ -32,7 +32,7 @@
         <div class="box-header">
           <h3 class="box-title">List alumni mahasiswa amik</h3>
           <button class="btn btn-sm btn-warning pull-right" id="btn-modal-download">download pdf</button>
-          @if (Session::get('id') == 'super-admin')
+          @if (Session::get('id') == 'admin')
           <button class="btn btn-sm btn-info pull-right" style="margin-right:5px" id="download-excel">download excel</button>
           <button class="btn bg-purple btn-sm pull-right" style="margin-right:5px" id="upload-excel">upload excel</button>
           <button class="btn bg-purple btn-sm pull-right" style="margin-right:5px" id="move-students">Pindahkan</button>
@@ -63,7 +63,7 @@
               <td>
                 <button type="button" class="btn btn-sm btn-success btn-modal" data-alamat="{{$item->alamat}}" 
                   data-ta="{{$item->judul_ta}}" data-masuk="{{$item->tahun_masuk}}" data-toggle="modal" data-target="#modal-detail">Detail</button>
-                @if (Session::get('id') == 'super-admin')
+                @if (Session::get('id') == 'admin')
                 <button type="button" class="btn bg-maroon btn-sm btn-modal-edit" data-toggle="modal" data-target="#modal-edit">Edit</button>
                 @endif
               </td>

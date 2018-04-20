@@ -44,6 +44,8 @@ class InputNilaiController extends Controller
 		
 		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/?key='.$key.'&id='.$id_matkul.'&semester='.$semester)
         ->withData($input)
-        ->post();
+				->post();
+				
+		return redirect('/nilai');
 	}
 }

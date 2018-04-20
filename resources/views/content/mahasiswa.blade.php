@@ -21,12 +21,12 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th style="width: 3%">No.</th>
-                <th style="width: 10%">Nim</th>
+                <th style="width: 1%">No.</th>
+                <th style="width: 8%">Nim</th>
                 <th style="width: 20%">Nama</th>
                 <th style="width: 10%">Gender</th>
-                <th style="width: 15%">TTl</th>
-                <th style="width: 15%">Jurusan</th>
+                <th style="width: 22%">TTl</th>
+                <th style="width: 10%">Jurusan</th>
                 <th style="width: 10%">Semester</th>
                 <th style="width: 10%">Alamat</th>
               </tr>
@@ -156,7 +156,7 @@
       serverSide: true,
       ajax: "mahasiswa/datatable",
       columns: [
-        { data: 'DT_Row_Index', width: '3%', searchable: false, orderable: false },
+        { data: 'DT_Row_Index', width: '1%', searchable: false, orderable: false },
         { data: 'nim', name: 'nim' },
         { data: 'nama', name: 'nama' },
         { data: 'gender', name: 'gender', searcable: false, orderable: false },

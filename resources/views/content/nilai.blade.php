@@ -7,7 +7,8 @@
 @section('content')
   <div class="box">
     <div class="box-header">
-      <h3 class="box-title">Nilai mahasiswa untuk mata kuliah {{ Session::get('id') }}</h3>
+      <h3 class="box-title">Nilai mahasiswa untuk matkul <strong>{{ Session::get('mata_kuliah') }}</strong>
+      semester <strong>{{ Session::get('semester') }}</strong></h3>
       <button class="btn btn-sm btn-warning pull-right" id="btn-modal-download">download pdf</button>
     </div>
     <!-- /.box-header -->
@@ -15,8 +16,9 @@
       <table class="table table-condensed">
         <tr>
           <th style="width: 3%">#</th>
-          <th style="width: 12%">NIM</th>
-          <th style="width: 35%">Nama</th>
+          <th style="width: 8%">NIM</th>
+          <th style="width: 25%">Nama</th>
+          <th style="width: 10%">Jurusan</th>
           <th style="width: 10%">Absensi</th>
           <th style="width: 10%">Tugas</th>
           <th style="width: 10%">Uts</th>
@@ -29,6 +31,7 @@
           <td>{{ $no++ }}</td>
           <td>{{ $item["nim"] }}</td>
           <td>{{ $item["nama"] }}</td>
+          <td>{{ $item["jurusan"] }}</td>
           <td>{{ $item["absensi"] }}</td>
           <td>{{ $item["tugas"] }}</td>
           <td>{{ $item["uts"] }}</td>

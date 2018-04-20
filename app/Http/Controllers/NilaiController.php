@@ -12,7 +12,7 @@ class NilaiController extends Controller
 		$key = $request->session()->get('key');
 		$semester = $request->session()->get('semester');
 		$id_matkul = $request->session()->get('id');
-
+		
 		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&offset=none')
 			->asJson()
 			->get();
@@ -27,14 +27,14 @@ class NilaiController extends Controller
 			$counter = 0;
 			foreach ((array) $nilai as $value) {
 				if ($item->nim == $value->nim) {
-					$push = ["nim" => $item->nim, "nama" => $item->nama, "absensi" => $value->absensi, "tugas" => $value->tugas, 
+					$push = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "absensi" => $value->absensi, "tugas" => $value->tugas, 
 									"uts" => $value->uts, "uas" => $value->uas, "nilai_akhir" => $value->nilai_akhir, "grade" => $this->grade($value->nilai_akhir)]; 
 					array_push($list, $push);
 				}
 				if ($item->nim != $value->nim) $counter++;
 						
 				if ($counter == count($nilai)) {
-					$new = ["nim" => $item->nim, "nama" => $item->nama, "absensi" => 0, "tugas" => 0, "uts" => 0,
+					$new = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "absensi" => 0, "tugas" => 0, "uts" => 0,
 								"uas" => 0, "nilai_akhir" => 0, "grade" => "D"];
 					array_push($list, $new);
 				}
@@ -51,6 +51,12 @@ class NilaiController extends Controller
 		$nilai = json_decode($request->session()->get('nilai'));
 		$pdf = PDF::loadView('pdf.nilaipdf', compact('nilai', 'matkul'))->setPaper('a4','potrait');
 		return $pdf->stream('nilai.pdf');
+	}
+
+
+	public function shorter($jurusan) {
+		$result = $jurusan == 'Manajemen Informatika' ? 'MI' : 'KA';
+		return $result;
 	}
 
 

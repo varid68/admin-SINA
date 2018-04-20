@@ -12,18 +12,20 @@
     <div class="col-md-12">
 
       <div class="alert alert-info alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <button type="button" id="close" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <ul>
           <li>Nilai absensi diperoleh dari ((Masuk kuliah / 14) x 10 / 100) x 100</li>
           <li>NIlai absensi max adalah 14 yang mana diperoleh dari jumlah pertemuan selama 1 semester</li>
           <li>Nilai akhir = 10% absensi + 20% tugas + 30% UTS + 40% UAS</li>
           <li>Nilai akhir akan muncul otomatis setelah field nilai absensi, tugas, UTS & UAS terisi semua-nya</li>
+          <li>tekan <strong>enter</strong> untuk berpindah ke kolom berikutnya</li>
+          <li>Silahkan click button <strong>submit</strong> untuk entry semua nilai</li>
         </ul>
       </div>
 
       <div class="box box-success">
         <div class="box-header">
-          <h3 class="box-title">Table nilai mahasiswa semester {{ Session::get('semester') }}</h3>
+          <h3 class="box-title">input nilai matkul <strong>{{ Session::get('mata_kuliah') }}</strong> semester <strong>{{ Session::get('semester') }}</strong></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">

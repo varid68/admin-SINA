@@ -14,17 +14,34 @@ $(function () {
     }, 1000);
   }
 
+  function removeAllOption() {
+    $('#select select')
+      .find('option')
+      .remove()
+      .end()
+      .append('<option value="w" disabled>- Pilih matkul -</option>')
+      .val('w')
+      ;
+  }
+
   function onSuccess(data) {
-    const object = `{"id":"super-admin","semester":"none"}`;
+    const object = `{"id":"admin","semester":"none","mata_kuliah":"none"}`;
+    const removeDuplicate = data.matkul.filter((thing, index, self) => 
+      index === self.findIndex((e) => (
+        e.id_matkul === thing.id_matkul
+      ))
+    );
 
     if (data != 'Wrong Password') {
-      if (data.auth.nama == 'super-admin') window.location = '/login/'+object;
+      if (data.auth.nama == 'admin') window.location = '/login/'+object;
       else {
+        removeAllOption();
         $('#select select').prop('disabled', false);
-        $.each(data.matkul, function (index, value) {
+        $.each(removeDuplicate, function (index, value) {
           let val = {
             id: value.id_matkul,
             semester: value.semester,
+            mata_kuliah: value.mata_kuliah,
           }
           let json = JSON.stringify(val);
           $('select')
@@ -81,7 +98,7 @@ $(function () {
 
   $("select").change(function () {
     window.location = '/login/' + $(this).val();
-    $('#loading').css('visibility', 'visible');
-    intervalLoading();
+    // $('#loading').css('visibility', 'visible');
+    // intervalLoading();
   });
 });
