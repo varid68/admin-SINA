@@ -19,8 +19,6 @@ Route::get('/login/{id}', 'LoginController@setSession')->name('set-sesi');
 Route::get('/logout', 'LoginController@logout')->name('logout');
 
 Route::middleware('key')->group(function() {
-  Route::get('/home', 'HomeController@index')->name('home');
-  
   Route::get('/news/{page?}', 'NewsController@index')->name('news list');
   Route::post('/news/input', 'NewsController@store')->name('input new news');
   Route::delete('/news/{id}', 'NewsController@delete')->name('delete news');
@@ -28,13 +26,6 @@ Route::middleware('key')->group(function() {
   Route::get('/mahasiswa', 'MahasiswaController@index')->name('list all students');
   Route::get('/mahasiswa-pdf', 'MahasiswaController@downloadPdf')->name('download students list');
   Route::get('/mahasiswa/datatable', 'MahasiswaController@datatable')->name('ajax datatable');
-  
-  Route::get('/alumni/{page?}', 'AlumniController@index')->name('list all alumni');
-  Route::get('/alumni-pdf', 'AlumniController@downloadPdf')->name('download alumni as pdf');
-  Route::post('/alumni', 'AlumniController@update')->name('update alumni');
-  Route::get('/alumni-excel', 'AlumniController@downloadExcel')->name('donwload alumni as excel');
-  Route::post('/alumni/excel/import', 'AlumniController@importExcel')->name('donwload alumni as excel');
-  Route::get('/alumni-move', 'AlumniController@moveToAlumni')->name('donwload alumni as excel');
   
   Route::get('/nilai', 'NilaiController@index')->name('list of students score');
   Route::get('/nilai-pdf', 'NilaiController@downloadPdf')->name('download students score');
