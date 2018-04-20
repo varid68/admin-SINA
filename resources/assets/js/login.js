@@ -26,16 +26,17 @@ $(function () {
 
   function onSuccess(data) {
     const object = `{"id":"admin","semester":"none","mata_kuliah":"none"}`;
-    const removeDuplicate = data.matkul.filter((thing, index, self) => 
-      index === self.findIndex((e) => (
-        e.id_matkul === thing.id_matkul
-      ))
-    );
 
     if (data != 'Wrong Password') {
+      console.log(data);
       if (data.auth.nama == 'admin') window.location = '/login/'+object;
       else {
         removeAllOption();
+        const removeDuplicate = data.matkul.filter((thing, index, self) =>
+          index === self.findIndex((e) => (
+            e.id_matkul === thing.id_matkul
+          ))
+        );
         $('#select select').prop('disabled', false);
         $.each(removeDuplicate, function (index, value) {
           let val = {
