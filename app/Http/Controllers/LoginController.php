@@ -32,7 +32,7 @@ class LoginController extends Controller
 		$request->session()->put('semester', $json->semester);
 		$request->session()->put('mata_kuliah', $json->mata_kuliah);
 
-		$redirect = $json->id == 'admin' ? 'news/1' : 'nilai';
+		$redirect = $json->id == 'admin' ? 'mahasiswa' : 'nilai';
 		return redirect("/$redirect");
 	}
 

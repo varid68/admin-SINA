@@ -27,6 +27,9 @@
       .progress-bar {
         background-color: red;
       }
+      .disable-link {
+        color: #5c6b72;
+      }
     </style>
     @yield('head')
   </head>
@@ -39,7 +42,7 @@
     
     <header class="main-header">
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="javascript:void(0)" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>A</b>LT</span>
         <!-- logo for regular state and mobile devices -->
@@ -65,7 +68,6 @@
               <!-- User image -->
               <li class="user-header">
                 <img src="{{ asset('images/user2-160x160.png') }}" class="img-circle" alt="User Image">
-                
                 <p>
                   {{ Session::get('dosenWithoutTitle') }} - {{ Session::get('mata_kuliah') }}
                   <small>Member since Nov. 2012</small>
@@ -83,6 +85,8 @@
       </div>
     </nav>
   </header>
+
+
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -94,61 +98,48 @@
         </div>
         <div class="pull-left info">
           <p>{{ Session::get('dosenWithoutTitle') }}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="javascript:void(0)"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        @if (Session::get('id') != 'admin')
+        @php $id = Session::get('id'); @endphp
         <li>
-          <a href="{{ url('/nilai') }}">
+          <a href={{ $id != 'admin' ? url('/nilai') : 'javascript:void(0)' }}>
             <i class="fa fa-trophy"></i>
-            <span data-id="nilai">Nilai</span>
+            <span class="{{ $id != 'admin' ? '' : 'disable-link' }}" data-id="nilai">Nilai</span>
           </a>
         </li>
         <li>
-          <a href="{{ url('/input-nilai') }}">
+          <a href={{ $id != 'admin' ? url('/input-nilai') : 'javascript:void(0)' }}>
             <i class="fa fa-pencil-square-o"></i>
-            <span data-id="input-nilai">Input nilai</span>
+            <span class="{{ $id != 'admin' ? '' : 'disable-link' }}" data-id="input-nilai">Input nilai</span>
           </a>
         </li>
         <li>
-          <a href="{{ url('/remidial') }}">
+          <a href={{ $id != 'admin' ? url('/remidial') : 'javascript:void(0)' }}>
             <i class="fa fa-refresh"></i>
-            <span data-id="remidial">Remidial</span>
+            <span class="{{ $id != 'admin' ? '' : 'disable-link' }}" data-id="remidial">Remidial</span>
           </a>
         </li>
         <li>
-          <a href="{{ url('/tampilschedule') }}">
+          <a href={{ $id == 'admin' ? url('/tampilschedule') : 'javascript:void(0)' }}>
             <i class="fa fa-calculator"></i>
-            <span data-id="hitungipk">Hitung IP</span>
+            <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="hitungipk">Hitung IP</span>
           </a>
         </li>
-        @endif
         <li>
           <a href="{{ url('/mahasiswa') }}">
             <i class="fa fa-user-circle-o"></i>
             <span data-id="mahasiswa">Mahasiswa</span>
           </a>
         </li>
-        <!-- <li>
-          <a href="{{ url('/alumni') }}">
-            <i class="fa fa-graduation-cap"></i>
-            <span data-id="alumni">Alumni</span>
-          </a>
-        </li> -->
         <li>
           <a href="{{ url('/news/1') }}">
             <i class="fa fa-bullhorn"></i>
             <span data-id="news">News</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ url('/news/1') }}">
-            <i class="fa fa-thumbs-o-up"></i>
-            <span data-id="news">Student's feedback</span>
           </a>
         </li>
       </ul>
@@ -197,6 +188,7 @@
   (function addClassActive(){
     let split = location.href.split('/');
     // let page = location.href.substr(location.href.lastIndexOf("/") + 1);
+    console.log(split);
     $('ul.sidebar-menu').find('li a span').each(function() {
       let parents = $(this).parents('li');
       $(this).data('id') == split[3] ? parents.addClass('active') : parents.removeClass('active');
