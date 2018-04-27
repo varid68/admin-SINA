@@ -10,7 +10,7 @@ class HitungIpkController extends Controller
   public function index(Request $request) {
     $key = $request->session()->get('key');    
     
-    $result = Curl::to('https://chylaceous-thin.000webhostapp.com/public/schedule-hitungipk/?key='.$key)
+    $result = Curl::to('https://chylaceous-thin.000webhostapp.com/public/schedule-hitungips/?key='.$key)
 			->asJson()
       ->get();
     
@@ -54,11 +54,11 @@ class HitungIpkController extends Controller
   public function hitung(Request $request, $semester, $jurusan) {
     $key = $request->session()->get('key');
     
-    $_mahasiswa = Curl::to("https://chylaceous-thin.000webhostapp.com/public/mahasiswa-hitungipk/$semester/$jurusan/?key=$key")
+    $_mahasiswa = Curl::to("https://chylaceous-thin.000webhostapp.com/public/mahasiswa-hitungips/$semester/$jurusan/?key=$key")
     ->asJson()
     ->get();
     
-    $nilai = Curl::to("https://chylaceous-thin.000webhostapp.com/public/nilai-hitungipk/$semester/$jurusan/?key=$key")
+    $nilai = Curl::to("https://chylaceous-thin.000webhostapp.com/public/nilai-hitungips/$semester/$jurusan/?key=$key")
     ->asJson()
     ->get();
     
@@ -91,7 +91,7 @@ class HitungIpkController extends Controller
       }
     }
     $request->session()->put('ip', $list);
-    return view('content.hitungip', compact('list'));
+    return view('content.hitungips', compact('list'));
 
   }
 
@@ -102,10 +102,9 @@ class HitungIpkController extends Controller
     $input = $request->input();
     unset($input['_token']);
 
-    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/entriipk/'.$semester.'/?key='.$key)
+    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/entriip/'.$semester.'/?key='.$key)
     ->withData($input)
     ->post();
-    dd($response);
   }
 
 

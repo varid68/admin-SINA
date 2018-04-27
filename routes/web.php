@@ -37,9 +37,9 @@ Route::middleware('key')->group(function() {
   Route::get('/remidial/edit', 'RemidialController@edit')->name('edit remedial score');
   Route::get('/remidial-pdf', 'RemidialController@downloadPdf')->name('download remedial score');
 
-  Route::get('/tampilschedule', 'HitungIpkController@index')->name('hitung ipk');
-  Route::get('/hitungip/{semester}/{jurusan}', 'HitungIpkController@hitung')->name('tampilkan ipk');
-  Route::post('/entryip', 'HitungIpkController@entry')->name('entry ipk');
-  Route::get('/ajax/{nim}', 'HitungIpkController@ajax')->name('tampilkan ipk');
+  Route::get('/tampilschedule', 'HitungIpkController@index')->name('hitung ips');
+  Route::get('/hitungip/{semester}/{jurusan}', 'HitungIpkController@hitung')->name('tampilkan ips');
+  Route::post('/entryip', 'HitungIpkController@entry')->name('entry ips');
+  Route::get('/ajax/{nim}', 'HitungIpkController@ajax')->name('tampilkan ips');
   
 });
