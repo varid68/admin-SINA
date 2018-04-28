@@ -1,13 +1,19 @@
 $(function () {
   let width = 10;
   let interval = null;
-  
+
+  $('body').ripples({
+    resolution: 512,
+    dropRadius: 20,
+    perturbance: 0.01,
+  });
+
   $('.glyphicon').click(function () {
     let san = $('input[name="password"]');
     san.attr('type') == 'password' ? san.attr('type', 'text') : san.attr('type', 'password');
   });
 
-  function intervalLoading () {
+  function intervalLoading() {
     interval = setInterval(function () {
       $('.progress-bar').css('width', width + '%');
       width = width < 100 ? width + 10 : 10;
@@ -29,7 +35,7 @@ $(function () {
 
     if (data != 'Wrong Password') {
       console.log(data);
-      if (data.auth.nama == 'admin') window.location = '/login/'+object;
+      if (data.auth.nama == 'admin') window.location = '/login/' + object;
       else {
         removeAllOption();
         const removeDuplicate = data.matkul.filter((thing, index, self) =>
@@ -61,8 +67,8 @@ $(function () {
     clearInterval(interval);
     $('#loading').css('visibility', 'hidden');
   }
-  
-  $('.btn-submit').click(function(e) {
+
+  $('.btn-submit').click(function (e) {
     const username = $('.username').val();
     const password = $('.password').val();
 
@@ -81,7 +87,7 @@ $(function () {
       username: $('input[name="username"]').val(),
       password: $('input[name="password"]').val(),
     }
-    
+
     if (formData.username != '' && formData.password != '') {
       $.ajax({
         type: 'POST',

@@ -69,5 +69,6 @@
 <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/custom/login.js') }}"></script>
+<script src="{{ asset('js/jquery.ripples.js') }}"></script>
 </body>
 </html>
