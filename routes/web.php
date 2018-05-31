@@ -18,14 +18,23 @@ Route::post('/login', 'LoginController@index')->name('login');
 Route::get('/login/{id}', 'LoginController@setSession')->name('set-sesi');
 Route::get('/logout', 'LoginController@logout')->name('logout');
 
+
 Route::middleware('key')->group(function() {
+  Route::get('home', function () {
+    return view('content.home');
+  });
+
   Route::get('/news/{page?}', 'NewsController@index')->name('news list');
   Route::post('/news/input', 'NewsController@store')->name('input new news');
   Route::delete('/news/{id}', 'NewsController@delete')->name('delete news');
 
   Route::get('/mahasiswa', 'MahasiswaController@index')->name('list all students');
+  // Route::get('/mahasiswa/delete/{id}', 'MahasiswaController@delete')->name('list all students');
+  Route::post('/mahasiswa/input', 'MahasiswaController@input')->name('list all students');
+  Route::post('/mahasiswa/edit', 'MahasiswaController@edit')->name('list all students');
   Route::get('/mahasiswa-pdf', 'MahasiswaController@downloadPdf')->name('download students list');
   Route::get('/mahasiswa/datatable', 'MahasiswaController@datatable')->name('ajax datatable');
+  Route::delete('/mahasiswa/{id}', 'MahasiswaController@delete')->name('delete mahasiswa');
   
   Route::get('/nilai', 'NilaiController@index')->name('list of students score');
   Route::get('/nilai-pdf', 'NilaiController@downloadPdf')->name('download students score');
@@ -37,9 +46,11 @@ Route::middleware('key')->group(function() {
   Route::get('/remidial/edit', 'RemidialController@edit')->name('edit remedial score');
   Route::get('/remidial-pdf', 'RemidialController@downloadPdf')->name('download remedial score');
 
-  Route::get('/tampilschedule', 'HitungIpkController@index')->name('hitung ips');
-  Route::get('/hitungip/{semester}/{jurusan}', 'HitungIpkController@hitung')->name('tampilkan ips');
-  Route::post('/entryip', 'HitungIpkController@entry')->name('entry ips');
-  Route::get('/ajax/{nim}', 'HitungIpkController@ajax')->name('tampilkan ips');
+  Route::get('/tampilschedule', 'HitungIpsController@index')->name('hitung ips');
+  Route::get('/hitungip/{semester}/{jurusan}', 'HitungIpsController@hitung')->name('tampilkan ips');
+  Route::post('/entryip', 'HitungIpsController@entry')->name('entry ips');
+  Route::get('/ajax/{nim}', 'HitungIpsController@ajax')->name('tampilkan ips');
+
+  Route::get('tampilipk', 'HitungIpkController@index')->name('hitung IPK');
   
 });

@@ -14,7 +14,7 @@
         .name{text-align:right;}
       </style>
   
-      <div style="font-family:Segoe Print; font-size:15px;font-style:italic">
+      {{-- <div style="font-family:Segoe Print; font-size:15px;font-style:italic">
         @if ($jurusan == 'none')
           <p>Menampilkan : jurusan Manajemen Informatika & Komputerisasi Akuntansi</p>
         @else
@@ -22,7 +22,7 @@
         @endif          
         <p style="font-family:Arial; font-size:15px;font-style:italic">Tahun lulus : {{ $start }} ~ {{ $end }}</p>
       </div>
-      <br>
+      <br> --}}
 
       <table class="tg">
         <tr>

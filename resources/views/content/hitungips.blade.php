@@ -68,7 +68,7 @@
           <td class="text-center">{{ round($item['total_mutu'] / $item['total_sks'], 2) }}</td>
           <input type="hidden" name="{{ $key }}" value="{{ $ip }}" />
           <td>
-            <button class="btn btn-sm bg-maroon preview" data-nim={{ $key }}>Preview</button>
+            <button type="button" class="btn btn-sm bg-maroon preview" data-nim={{ $key }}>Preview</button>
           </td>
         </tr>
         @endforeach

@@ -113,21 +113,27 @@
           </a>
         </li>
         <li>
-          <a href={{ $id != 'admin' ? url('/input-nilai') : 'javascript:void(0)' }}>
-            <i class="fa fa-pencil-square-o"></i>
-            <span class="{{ $id != 'admin' ? '' : 'disable-link' }}" data-id="input-nilai">Input nilai</span>
-          </a>
-        </li>
-        <li>
           <a href={{ $id != 'admin' ? url('/remidial') : 'javascript:void(0)' }}>
             <i class="fa fa-refresh"></i>
             <span class="{{ $id != 'admin' ? '' : 'disable-link' }}" data-id="remidial">Remidial</span>
           </a>
         </li>
         <li>
+          <a href={{ $id != 'admin' ? url('/input-nilai') : 'javascript:void(0)' }}>
+            <i class="fa fa-pencil-square-o"></i>
+            <span class="{{ $id != 'admin' ? '' : 'disable-link' }}" data-id="input-nilai">Input nilai</span>
+          </a>
+        </li>
+        <li>
           <a href={{ $id == 'admin' ? url('/tampilschedule') : 'javascript:void(0)' }}>
             <i class="fa fa-calculator"></i>
-            <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="hitungipk">Hitung IP</span>
+            <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="hitungip">Hitung IPS</span>
+          </a>
+        </li>
+        <li>
+          <a href={{ $id == 'admin' ? url('/tampilipk') : 'javascript:void(0)' }}>
+            <i class="fa fa-pie-chart"></i>
+            <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="tampilipk">Hitung IPK</span>
           </a>
         </li>
         <li>

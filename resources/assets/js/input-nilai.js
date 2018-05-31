@@ -3,7 +3,7 @@ $(function () {
   let absensi = 0;
   let uts = 0;
   let hasilAkhir = [];
-  
+
   (function focusOnInit() {
     $('input').eq(1).focus();
   }());
@@ -51,16 +51,16 @@ $(function () {
   function gradeNilai(nilai, indexElem) {
     let grade = null;
 
-    if (nilai <= 100 && nilai >= 92) grade = 'A';
-    else if (nilai <= 91 && nilai >= 84) grade = 'A-';      
-    else if (nilai <= 83 && nilai >= 75) grade = 'B+';
-    else if (nilai <= 74 && nilai >= 67) grade = 'B';
-    else if (nilai <= 66 && nilai >= 59) grade = 'B-';      
-    else if (nilai <= 58 && nilai >= 50) grade = 'C+';      
-    else if (nilai <= 49 && nilai >= 42) grade = 'C';      
-    else if (nilai <= 41 && nilai >= 34) grade = 'C';      
-    else if (nilai <= 33 && nilai >= 25) grade = 'D+';      
-    else if (nilai <= 24) grade = 'D';
+    if (nilai <= 100 && nilai >= 85) grade = 'A';
+    else if (nilai <= 84 && nilai >= 80) grade = 'A-';
+    else if (nilai <= 79 && nilai >= 75) grade = 'B+';
+    else if (nilai <= 74 && nilai >= 70) grade = 'B';
+    else if (nilai <= 69 && nilai >= 65) grade = 'B-';
+    else if (nilai <= 64 && nilai >= 60) grade = 'C+';
+    else if (nilai <= 59 && nilai >= 55) grade = 'C';
+    else if (nilai <= 54 && nilai >= 50) grade = 'C-';
+    else if (nilai <= 50 && nilai >= 40) grade = 'D';
+    else if (nilai <= 39) grade = 'E';
     else grade = '!!'
 
     $('input.nilai-akhir[type="hidden"]').eq(indexElem).val(nilai);

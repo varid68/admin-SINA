@@ -12,12 +12,25 @@ body {
   height: 100%;
 }
 
+marquee {
+  margin-top: 50px;
+}
+
+marquee span {
+  color: #E91E63;
+  font-weight: bolder;
+}
+
+marquee p {
+  font-size: 20px;
+}
+
 #form {
   position: absolute;
 
   .form-horizontal {
     position: relative;
-    top: 40vh;
+    top: 20vh;
   }
 }
 

@@ -25,6 +25,7 @@ class LoginController extends Controller
 		}
 		return response()->json($response);
 	}
+
 	
 	public function setSession(Request $request, $object) {
 		$json = json_decode($object);
@@ -36,9 +37,9 @@ class LoginController extends Controller
 		return redirect("/$redirect");
 	}
 
+
 	public function logout(Request $request) {
 		$request->session()->flush();
 		return redirect('/');
 	}
 }
-

@@ -1,5 +1,7 @@
 @extends('layout')
 @section('head')
+  <meta name="_token" content="{!! csrf_token() !!}">
+  <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}" />
   <link href="https://cdn.datatables.net/1.10.16/css/dataTables.jqueryui.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/mahasiswa.css') }}">
 @endsection
@@ -9,12 +11,21 @@
 @endsection
 
 @section('content')
+  <form action="#" id="delete-form" method="POST">
+    {{ csrf_field() }}
+    <input type="hidden" name="_method" value="DELETE">
+  </form><!-- FORM DELETE -->
+
   <div class="row">
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header">
           <h3 class="box-title">List mahasiswa amik al-muslim</h3>
-          <button class="btn btn-sm btn-warning pull-right" id="btn-modal-download">download pdf</button>
+          @php $id = Session::get('id'); @endphp
+          <button class="btn btn-sm btn-warning pull-right" id="btn-modal-filter">download pdf</button>
+          @if ($id == 'admin')
+          <button class="btn btn-sm btn-success pull-right" id="btn-modal-add">tambah</button>
+          @endif
         </div>
         <!-- /.box-header -->
         <div class="box-body no-padding">
@@ -60,6 +71,109 @@
       </div>
 
 
+      <div class="modal fade" id="general-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form method="POST" action="#">
+            {{ csrf_field() }}
+            <div class="modal-body">
+
+              <div class="row form-group">
+                <div class="col-md-2">
+                  <p>Nim</p>
+                </div>
+                <div class="col-md-4">
+                  <input type="number" name="nim" class="form-control input-sm" placeholder="masukkan nim" required />
+                </div>
+                <div class="col-md-2">
+                  <p>Nama</p>
+                </div>
+                <div class="col-md-4">                  
+                  <input type="text" name="nama" class="form-control input-sm" placeholder="masukkan nama" required />
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-2">
+                  <p>gender</p>
+                </div>
+                <div class="col-md-4">
+                  <select name="gender" id="gender" class="form-control input-sm" required>
+                    <option selected disabled>pilih gender</option>
+                    <option value="laki-laki">Laki Laki</option>
+                    <option value="perempuan">Perempuan</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <p>TTL</p>
+                </div>
+                <div class="col-md-4">                  
+                  <input type="text" name="ttl" class="form-control input-sm" placeholder="masukkan TTL" required />
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-2">
+                  <p>alamat</p>
+                </div>
+                <div class="col-md-4">
+                  <textarea name="alamat" class="form-control input-sm" rows="7" placeholder="Masukkan alamat lengkap calon mahasiswa" required ></textarea>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <p>Jurusan</p>
+                    </div>
+                    <div class="col-md-8">                  
+                      <select name="jurusan" id="jurusan" class="form-control input-sm" required >
+                        <option selected disabled>pilih jurusan</option>
+                        <option value="Manajemen Informatika">Manajemen Informatika</option>
+                        <option value="Komputerisasi Akuntansi">Komputerisasi Akuntansi</option>
+                      </select>
+                    </div>
+                  </div></br>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <p>semester</p>
+                    </div>
+                    <div class="col-md-8">                  
+                      <select name="semester" id="semester" class="form-control input-sm" required >
+                        <option selected disabled>pilih semester</option>
+                        <option value="I">I</option>
+                        <option value="II">II</option>
+                        <option value="Akselerasi I">Akselerasi I</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>
+                        <option value="Akselerasi II">Akselerasi II</option>
+                      </select>
+                    </div>
+                  </div></br>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <p class="tm">Tahun masuk</p>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="number" name="tahun_masuk" class="form-control input-sm" placeholder="Masukkan tahun masuk" required />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="animate-flicker">Format Penulisan TTL : nama_kota/DD-MM-YYYY || ex : Bekasi/23-09-1992</div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-sm btn-success btn-submit pull-right">Submit</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
       <div class="modal fade" id="modal-filter">
         <div class="modal-dialog modal-sm">
           <div class="modal-content">
@@ -70,42 +184,45 @@
 
             <div class="modal-body">
 
-              <div class="row-container">
-                <p class="first-column">Jurusan : </p>
-                <select id="jurusan-modal">
-                  <option selected disabled>pilih</option>
-                  <option value="none">Semua jurusan</option>
-                  <option value="Manajemen Informatika">Manajemen Informatika</option>
-                  <option value="Komputerisasi Akuntansi">Komputerisasi Akuntansi</option>
-                </select>
-                <!-- <div id="empty-div"></div> -->
-              </div></br>
-
-              <div class="row-container">
-                <p style="flex: unset;font-weight:bold">Thn masuk: </p>
-                <div style="flex: 1;margin-left:10px">
-                  <select id="start" style="border-radius:3px;display: inline-block;">
-                    <option selected disabled>pilih</option>                    
-                    @for ($i = 2016; $i < 2020; $i++)
-                      <option value="{{ $i }}">{{ $i }}</option>
-                    @endfor
-                  </select>
-                  <span style="display: inline-block;font-size:12px"> s/d Tahun </span>
-                  <select id="end" style="display: inline-block;border-radius:3px;">
-                    <option selected disabled>pilih</option>                    
-                    @for ($i = 2016; $i < 2020; $i++)
-                      <option value="{{ $i }}">{{ $i }}</option>
-                    @endfor
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <p>Jurusan</p>
+                </div>
+                <div class="col-md-8">
+                  <select id="jurusan-modal" class="form-control input-sm">
+                    <option selected disabled>pilih</option>
+                    <option value="none">Semua jurusan</option>
+                    <option value="Manajemen Informatika">Manajemen Informatika</option>
+                    <option value="Komputerisasi Akuntansi">Komputerisasi Akuntansi</option>
                   </select>
                 </div>
               </div>
-                <p style="color: red; font-style:italic;font-size:12px;text-align:center;display: none" id="warning">Silahkan pilih filter terlebih dahulu!</p>
+
+              <div class="row form-group">
+                <div class="col-md-4">
+                  <p>Semester</p>
+                </div>
+                <div class="col-md-8">
+                  <select id="semester-modal" class="form-control input-sm">
+                    <option selected disabled>pilih</option>
+                    <option value="none">Semua semester</option>
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="Akselerasi I">Akselerasi I</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                    <option value="Akselerasi II">Akselerasi II</option>
+                  </select>
+                </div>
+              </div>
+
+              <p style="color: red; font-style:italic;font-size:12px;text-align:center;display: none" id="warning">Silahkan pilih filter terlebih dahulu!</p>
             </div>
 
             <div class="modal-footer">
               <button type="button" class="btn btn-sm btn-success pull-right" id="btn-download">Download PDF</button>
             </div>
-          </divx>
+          </div>
         </div>
       </div>
           <!-- /.modal -->
@@ -116,56 +233,17 @@
 @endsection
 
 @section('script')
+  <script src="https://unpkg.com/sweetalert2@7.6.3/dist/sweetalert2.all.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.jqueryui.min.js"></script>
+  <script src="{{ asset('js/custom/mahasiswa.js') }}"></script>
   <script>
-    $(document).on('click', '.btn-success', function() {
-      const selector = $(this).parent();
-      const nim = selector.siblings().eq(1).text();
-      const nama = selector.siblings().eq(2).text();
-      const alamat = $(this).data('alamat');
-
-      $('.modal-nama').text(nama);
-      $('.modal-nim').text(nim);
-      $('.modal-alamat').text(alamat);
+    $('#btn-modal-add').click(function() {
+      $('#general-modal').find('form').attr('action', "{{ url('mahasiswa/input') }}");      
     });
 
-    $('#btn-modal-download').click(function() {
-      $('#modal-filter').modal('show');
-    });
-
-    $('#btn-download').click(function() {
-      const start = $('#start').val();
-      const end = $('#end').val();
-      const jurusan = $('#jurusan-modal').val();
-
-      if (start == null || end == null || jurusan == null) {
-        $('#warning').show();
-        return false;
-      } else {
-        $('#warning').hide();
-      }
-
-      window.location = `/mahasiswa-pdf?start=${start}&end=${end}&jurusan=${jurusan}`;
-    });
-
-    $(".table-hover").dataTable({
-      stateSave: true,
-      responsive: true,
-      processing: true,
-      serverSide: true,
-      ajax: "mahasiswa/datatable",
-      columns: [
-        { data: 'DT_Row_Index', width: '1%', searchable: false, orderable: false },
-        { data: 'nim', name: 'nim' },
-        { data: 'nama', name: 'nama' },
-        { data: 'gender', name: 'gender', searcable: false, orderable: false },
-        { data: 'ttl', name: 'ttl', searchable: false, orderable: false },    
-        { data: 'jurusan', name: 'jurusan', searcable: false, orderable: false },
-        { data: 'semester', name: 'semester', searcable: false, },
-        { data: 'action', name: 'action', orderable: false, searchable: false },
-      ]
+    $(document).on('click', '.edit', function() {
+      $('#general-modal').find('form').attr('action', "{{ url('mahasiswa/edit') }}");
     });
   </script>
-  <!-- <script src="{{ asset('js/custom/nilai.js') }}"></script> -->
 @endsection

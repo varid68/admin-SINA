@@ -24,6 +24,7 @@ class NewsController extends Controller
 		return view('content.news', ['list' => $response, 'total' => $total, 'page' => $page ]);
 	}
 
+
 	public function store(Request $request) {
 		$key = $request->session()->get('key');
 		$image = $request->input('image');
@@ -44,6 +45,7 @@ class NewsController extends Controller
 		OneSignal::sendNotificationToAll($notif, $url = null, $data = null, $buttons = null, $schedule = null);
 		return redirect('/news/1');
 	}
+	
 
 	public function delete(Request $request, $id) {
 		$key = $request->session()->get('key');		

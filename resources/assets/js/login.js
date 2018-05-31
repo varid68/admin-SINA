@@ -105,7 +105,5 @@ $(function () {
 
   $("select").change(function () {
     window.location = '/login/' + $(this).val();
-    // $('#loading').css('visibility', 'visible');
-    // intervalLoading();
   });
 });

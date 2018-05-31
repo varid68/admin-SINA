@@ -20,6 +20,10 @@
   </div>
 
   <div class="container">
+    <marquee style="color: #fff">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selamat datang di aplikasi SINA</p>
+      <p style="margin-top:-10px"><span>S</span>istem <span>I</span>nformasi pe<span>N</span>ilaian <span>A</span>kademik</p>
+    </marquee>
     <div class="row">
       <div class="col-md-6 col-md-offset-4 col-sm-4 col-sm-offset-3 col-xs-8 col-xs-offset-2" id="form">
         <form class="form-horizontal">

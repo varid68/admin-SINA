@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Curl;
 
-class HitungIpkController extends Controller
+class HitungIpsController extends Controller
 {
   public function index(Request $request) {
     $key = $request->session()->get('key');    
@@ -21,7 +21,7 @@ class HitungIpkController extends Controller
 
     foreach ((array) $semester as $value) {
       $mi["$value"] = [];
-      foreach ($result->mi as $item) {
+      foreach ((array) $result->mi as $item) {
         if ($item->semester == $value) {
           $new = [
             'matkul' => $item->mata_kuliah,
@@ -35,7 +35,7 @@ class HitungIpkController extends Controller
 
     foreach ((array) $semester as $value) {
       $ka["$value"] = [];
-      foreach ($result->ka as $item) {
+      foreach ((array) $result->ka as $item) {
         if ($item->semester == $value) {
           $new = [
             'matkul' => $item->mata_kuliah,
@@ -149,6 +149,7 @@ class HitungIpkController extends Controller
     else $bobot = 1.00;
     return $bobot;
   }
+  
 
   protected function hitung_total_sks($array) {
     $x = 0;

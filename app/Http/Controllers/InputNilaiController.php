@@ -11,7 +11,6 @@ class InputNilaiController extends Controller
 		$key = $request->session()->get('key');
 		$semester = $request->session()->get('semester');
 		$id_matkul = $request->session()->get('id');
-		// $offset = ($page -1) * 10;
 
 		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&offset=none')
 			->asJson()
@@ -31,9 +30,9 @@ class InputNilaiController extends Controller
 			}
 		}
 
-		// $total = ceil($response2 / 7);
 		return view('content.inputnilai',compact('list', 'total', 'page'));
 	}
+	
 
 	public function store(Request $request) {
 		$input = $request->input();
