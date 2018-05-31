@@ -126,13 +126,37 @@ class MahasiswaController extends Controller
 	
 
 	public function downloadPdf(Request $request) {
+		$id = $request->session()->get('id');
 		$jurusan = urlencode($request->query('jurusan'));
+		$_jurusan = $request->query('jurusan');
 		$semester = $request->query('semester');
 		$key = $request->session()->get('key');
 
-		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/filter-mahasiswa/?key='.$key.'&semester='.$semester.'&jurusan='.$jurusan)
-		->asJson()
-		->get();
+		if ($id != 'admin') {
+			$mahasiswa = $request->session()->get('mahasiswa');
+			
+			if ($jurusan == 'none' && $semester == 'none') $response = $mahasiswa;
+			elseif ($jurusan == 'none' && $semester != 'none') {
+				$response = array_filter($mahasiswa, function($e) use ($semester) {
+					return ($e->semester == $semester);
+				});
+			}
+			elseif ($semester == 'none' && $jurusan != 'none') {
+				$response = array_filter($mahasiswa, function($e) use ($_jurusan) {
+					return ($e->jurusan == $_jurusan);
+				});
+			}
+			else {
+				$response = array_filter($mahasiswa, function($e) use ($semester, $_jurusan) {
+					return ($e->semester == $semester && $e->jurusan == $_jurusan);
+				});
+			}
+			
+		} else {
+			$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/filter-mahasiswa/?key='.$key.'&semester='.$semester.'&jurusan='.$jurusan)
+			->asJson()
+			->get();
+		}
 
 		$pdf = PDF::loadView('pdf.mahasiswapdf', compact('response'))->setPaper('a4','landscape');
     return $pdf->stream('list-mahasiswa.pdf');

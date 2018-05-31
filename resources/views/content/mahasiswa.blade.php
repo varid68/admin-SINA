@@ -190,7 +190,7 @@
                 </div>
                 <div class="col-md-8">
                   <select id="jurusan-modal" class="form-control input-sm">
-                    <option selected disabled>pilih</option>
+                    <option selected disabled>pilih jurusan</option>
                     <option value="none">Semua jurusan</option>
                     <option value="Manajemen Informatika">Manajemen Informatika</option>
                     <option value="Komputerisasi Akuntansi">Komputerisasi Akuntansi</option>
@@ -204,7 +204,7 @@
                 </div>
                 <div class="col-md-8">
                   <select id="semester-modal" class="form-control input-sm">
-                    <option selected disabled>pilih</option>
+                    <option selected disabled>pilih semester</option>
                     <option value="none">Semua semester</option>
                     <option value="I">I</option>
                     <option value="II">II</option>
