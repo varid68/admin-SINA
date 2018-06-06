@@ -11,8 +11,9 @@ class InputNilaiController extends Controller
 		$key = $request->session()->get('key');
 		$semester = $request->session()->get('semester');
 		$id_matkul = $request->session()->get('id');
+		$jurusan = urlencode($request->session()->get('jurusan'));
 
-		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&offset=none')
+		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&jurusan='.$jurusan)
 			->asJson()
 			->get();
 
@@ -26,8 +27,8 @@ class InputNilaiController extends Controller
 			$counter = 0;
 			foreach ((array) $nilai as $value) {
 				if ($item->nim != $value->nim) $counter++;
-				if ($counter == count($nilai)) array_push($list, $item);
 			}
+			if ($counter == count($nilai)) array_push($list, $item);
 		}
 
 		return view('content.inputnilai',compact('list', 'total', 'page'));

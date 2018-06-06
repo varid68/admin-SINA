@@ -12,8 +12,9 @@ class RemidialController extends Controller
 		$key = $request->session()->get('key');
 		$semester = $request->session()->get('semester');
 		$id_matkul = $request->session()->get('id');
+		$jurusan = urlencode($request->session()->get('jurusan'));
 
-		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&offset=none')
+		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&jurusan='.$jurusan)
 			->asJson()
 			->get();
 
@@ -31,13 +32,13 @@ class RemidialController extends Controller
 									"uts" => $value->uts, "uas" => $value->uas, "nilai_akhir" => $value->nilai_akhir, "grade" => $this->grade($value->nilai_akhir)]; 
 					array_push($list, $push);
 				}
-				if ($item->nim != $value->nim) $counter++;
-						
-				if ($counter == count($nilai)) {
-					$new = ["nim" => $item->nim, "nama" => $item->nama, "absensi" => 0, "tugas" => 0, "uts" => 0,
-								"uas" => 0, "nilai_akhir" => 0, "grade" => "D"];
-					array_push($list, $new);
-				}
+				if ($item->nim != $value->nim) $counter++;	
+			}
+			
+			if ($counter == count($nilai)) {
+				$new = ["nim" => $item->nim, "nama" => $item->nama, "absensi" => 0, "tugas" => 0, "uts" => 0,
+							"uas" => 0, "nilai_akhir" => 0, "grade" => "D"];
+				array_push($list, $new);
 			}
 		}
 

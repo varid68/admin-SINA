@@ -34,7 +34,6 @@ $(function () {
     const object = `{"id":"admin","semester":"none","mata_kuliah":"none"}`;
 
     if (data != 'Wrong Password') {
-      console.log(data);
       if (data.auth.nama == 'admin') window.location = '/login/' + object;
       else {
         removeAllOption();

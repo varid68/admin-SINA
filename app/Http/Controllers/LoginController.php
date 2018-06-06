@@ -28,10 +28,18 @@ class LoginController extends Controller
 
 	
 	public function setSession(Request $request, $object) {
+    $key = $request->session()->get('key');    
 		$json = json_decode($object);
 		$request->session()->put('id', $json->id);
 		$request->session()->put('semester', $json->semester);
 		$request->session()->put('mata_kuliah', $json->mata_kuliah);
+
+		$result = Curl::to('https://chylaceous-thin.000webhostapp.com/public/finder/'.$json->id.'/?key='.$key)
+				->asJson()
+				->get();
+				
+		if (count($result) == 1) $request->session()->put('jurusan', $result[0]->jurusan);
+		else $request->session()->put('jurusan', 'general');
 
 		$redirect = $json->id == 'admin' ? 'mahasiswa' : 'nilai';
 		return redirect("/$redirect");
