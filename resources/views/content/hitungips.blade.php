@@ -1,6 +1,9 @@
 @extends('layout')
 @section('head')
   <meta name="_token" content="{!! csrf_token() !!}">
+  <style>
+    .bg-purple { margin-right: 10px }
+  </style>
 @endsection
 
 @section('heading')
@@ -38,7 +41,7 @@
     </div>
   </div>
 
-  <form action="{{ URL('entryip') }}" method="POST">
+  <form action="{{ URL('action') }}" method="POST">
   {{csrf_field()}}
   <div class="box">
     <div class="box-header">
@@ -76,7 +79,8 @@
     </div>
     <!-- /.box-body -->
   </div>
-  <button type="submit" class="btn btn-sm btn-success pull-right">Submit IP</button>
+  <button type="submit" class="btn btn-sm btn-success pull-right" name="action" value="entry">Entry IP</button>
+  <button type="submit" class="btn btn-sm bg-purple pull-right" name="action" value="edit">Edit IP</button>
   </form>
 @endsection
 

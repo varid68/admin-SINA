@@ -53,6 +53,7 @@ class HitungIpsController extends Controller
 
   public function hitung(Request $request, $semester, $jurusan) {
     $key = $request->session()->get('key');
+    $request->session()->put('selectedSemester', $semester);
     
     $_mahasiswa = Curl::to("https://chylaceous-thin.000webhostapp.com/public/mahasiswa-hitungips/$semester/$jurusan/?key=$key")
     ->asJson()
@@ -96,15 +97,36 @@ class HitungIpsController extends Controller
   }
 
 
-  public function entry(Request $request) {
+  public function actionController(Request $request) {
+    $request->input('action') == 'entry' ? $this->entry($request) : $this->edit($request);
+  }
+
+
+  public function entry($request) {
     $key = $request->session()->get('key');
-    $semester = $request->session()->get('semester');
+    $semester = $request->session()->get('selectedSemester');
     $input = $request->input();
     unset($input['_token']);
 
-    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/entriip/'.$semester.'/?key='.$key)
+    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/entryips/'.$semester.'/?key='.$key)
     ->withData($input)
     ->post();
+
+    return redirect('/tampilschedule');
+  }
+
+
+  public function edit($request) {
+    $key = $request->session()->get('key');
+    $semester = $request->session()->get('selectedSemester');
+    $input = $request->input();
+    unset($input['_token']);
+
+    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/editips/'.$semester.'/?key='.$key)
+    ->withData($input)
+    ->post();
+    
+    return redirect('/tampilschedule');
   }
 
 
