@@ -99,6 +99,7 @@ class HitungIpsController extends Controller
 
   public function actionController(Request $request) {
     $request->input('action') == 'entry' ? $this->entry($request) : $this->edit($request);
+    return redirect('/tampilschedule');
   }
 
 
@@ -111,8 +112,6 @@ class HitungIpsController extends Controller
     $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/entryips/'.$semester.'/?key='.$key)
     ->withData($input)
     ->post();
-
-    return redirect('/tampilschedule');
   }
 
 
@@ -125,8 +124,6 @@ class HitungIpsController extends Controller
     $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/editips/'.$semester.'/?key='.$key)
     ->withData($input)
     ->post();
-    
-    return redirect('/tampilschedule');
   }
 
 

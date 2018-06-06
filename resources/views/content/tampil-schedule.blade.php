@@ -87,7 +87,7 @@
           @if ($y > 0)
             <button type="button" class="btn btn-sm btn-info pull-right disabled">Hitung IP</button>
           @else
-          <a href="/hitungip/{{$key}}/Manajemen Informatika">
+          <a href="/hitungip/{{$key}}/Komputerisasi Akuntansi">
             <button type="button" class="btn btn-sm btn-info pull-right">Hitung IP</button>
           </a>
           @endif
