@@ -54,43 +54,53 @@ class HitungIpsController extends Controller
   public function hitung(Request $request, $semester, $jurusan) {
     $key = $request->session()->get('key');
     $request->session()->put('selectedSemester', $semester);
+    $_semester = urlencode($semester);
+    $_jurusan = urlencode($jurusan);
     
-    $_mahasiswa = Curl::to("https://chylaceous-thin.000webhostapp.com/public/mahasiswa-hitungips/$semester/$jurusan/?key=$key")
-    ->asJson()
-    ->get();
-    
-    $nilai = Curl::to("https://chylaceous-thin.000webhostapp.com/public/nilai-hitungips/$semester/$jurusan/?key=$key")
-    ->asJson()
-    ->get();
+    $_mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$_semester.'&jurusan='.$_jurusan)
+		->asJson()
+		->get();
     
     $mahasiswa = json_decode(json_encode($_mahasiswa), true);
-    $nilai_converted = $this->array_converter($nilai);
+    $nim = [];
+
+    foreach ((array)$mahasiswa as $item) {
+      array_push($nim, $item['nim']);
+    }
+    $nilai = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai-hitungips/?key='.$key.'&semester='.$_semester)
+    ->withData($nim)
+    ->asJson()
+    ->post();
+    
     $list = [];
     
     foreach ((array)$mahasiswa as $value) {
       $x = 0;
       $list[$value['nim']]['data'] = [];
       $list[$value['nim']]['nama'] = $value['nama'];
-      $list[$value['nim']]['total_sks'] = $this->hitung_total_sks($nilai_converted);
-      foreach ((array) $nilai_converted as $key => $item) {
+      $list[$value['nim']]['total_sks'] = $this->hitung_total_sks($nilai);
+      foreach ((array) $nilai as $key => $item) {
         if ($value['nim'] == $key) {
           foreach ((array) $item as $key2 => $item2) {
-            $push = [
-              'matkul' => $item2['matkul'],
-              'sks' =>  $item2['sks'],
-              'skala_nilai' => $this->skala_nilai($item2['nilai_akhir']),
-              'bobot_nilai' => $this->bobot_nilai($item2['nilai_akhir']),
-              'mutu' => $item2['sks'] * $this->bobot_nilai($item2['nilai_akhir']),
-            ];
-            array_push($list[$value['nim']]['data'], $push);
-
-            $total = $item2['sks'] * $this->bobot_nilai($item2['nilai_akhir']) + $x;
-            $x = $total;
+            foreach ($item2 as $item3) {
+              $push = [
+                  'matkul' => $item3->mata_kuliah,
+                  'sks' =>  $item3->sks,
+                  'skala_nilai' => $this->skala_nilai($item3->nilai_akhir),
+                  'bobot_nilai' => $this->bobot_nilai($item3->nilai_akhir),
+                  'mutu' => $item3->sks * $this->bobot_nilai($item3->nilai_akhir),
+                ];
+                array_push($list[$value['nim']]['data'], $push);
+                
+                $total = $item3->sks * $this->bobot_nilai($item3->nilai_akhir) + $x;
+                $x = $total;
+              }
           }
           $list[$value['nim']]['total_mutu'] = $total;
         }
       }
     }
+    
     $request->session()->put('ip', $list);
     return view('content.hitungips', compact('list'));
 
@@ -174,8 +184,10 @@ class HitungIpsController extends Controller
     $x = 0;
     foreach ($array as $value) {
       foreach ($value as $item) {
-        $total = $item['sks'] + $x;
-        $x = $total;
+        foreach ($item as $item2) {
+          $total = $item2->sks + $x;
+          $x = $total;
+        }
       }
       break;
     }
@@ -188,25 +200,4 @@ class HitungIpsController extends Controller
     return $result[0];
   }
 
-
-  protected function array_converter($array) {
-    $length = array_count_values(array_column($array, 'nim'));
-
-    $result = [];
-    foreach ($length as $key => $value) {
-      $result[$key] = [];
-      foreach ($array as $item) {
-        if ($item->nim == $key) {
-          $push = [
-            'matkul' => $item->mata_kuliah,
-            'nilai_akhir' => $item->nilai_akhir,
-            'sks' => $item->sks
-          ];
-          array_push($result[$key], $push);
-        }
-      }
-    }
-    return $result;
-
-  }
 }

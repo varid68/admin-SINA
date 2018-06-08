@@ -10,7 +10,7 @@ class NilaiController extends Controller
 {
   public function index(Request $request) {
 		$key = $request->session()->get('key');
-		$semester = $request->session()->get('semester');
+		$semester = urlencode($request->session()->get('semester'));
 		$id_matkul = $request->session()->get('id');
 		$jurusan = urlencode($request->session()->get('jurusan'));
 		

@@ -36,7 +36,7 @@
             @endif
           @endforeach
           @if ($y > 0)
-            <button type="button" class="btn btn-sm btn-info pull-right disabled">Hitung IP</button>
+            <button type="button" class="btn btn-sm btn-info pull-right disabled">Hitung IPS</button>
           @else
           <a href="/hitungip/{{$key}}/Manajemen Informatika">
             <button type="button" class="btn btn-sm btn-info pull-right">Hitung IPS</button>
@@ -85,10 +85,10 @@
             @endif
           @endforeach
           @if ($y > 0)
-            <button type="button" class="btn btn-sm btn-info pull-right disabled">Hitung IP</button>
+            <button type="button" class="btn btn-sm btn-info pull-right disabled">Hitung IPS</button>
           @else
           <a href="/hitungip/{{$key}}/Komputerisasi Akuntansi">
-            <button type="button" class="btn btn-sm btn-info pull-right">Hitung IP</button>
+            <button type="button" class="btn btn-sm btn-info pull-right">Hitung IPS</button>
           </a>
           @endif
         </div>

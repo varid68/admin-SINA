@@ -9,13 +9,13 @@ class InputNilaiController extends Controller
 {
 	public function index(Request $request, $page = 1) {
 		$key = $request->session()->get('key');
-		$semester = $request->session()->get('semester');
+		$semester = urlencode($request->session()->get('semester'));
 		$id_matkul = $request->session()->get('id');
 		$jurusan = urlencode($request->session()->get('jurusan'));
 
 		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&jurusan='.$jurusan)
-			->asJson()
-			->get();
+		->asJson()
+		->get();
 
 		$nilai = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/?key='.$key.'&semester='.$semester.'&id_matkul='.$id_matkul)
 			->asJson()
@@ -39,9 +39,9 @@ class InputNilaiController extends Controller
 		$input = $request->input();
 		unset($input['_token']);
 		$id_matkul = $request->session()->get('id');
-		$semester = $request->session()->get('semester');
+		$semester = urlencode($request->session()->get('semester'));
 		$key = $request->session()->get('key');
-		
+
 		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/?key='.$key.'&id='.$id_matkul.'&semester='.$semester)
         ->withData($input)
 				->post();
