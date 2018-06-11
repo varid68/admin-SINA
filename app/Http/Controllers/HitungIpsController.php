@@ -84,17 +84,17 @@ class HitungIpsController extends Controller
           foreach ((array) $item as $key2 => $item2) {
             foreach ($item2 as $item3) {
               $push = [
-                  'matkul' => $item3->mata_kuliah,
-                  'sks' =>  $item3->sks,
-                  'skala_nilai' => $this->skala_nilai($item3->nilai_akhir),
-                  'bobot_nilai' => $this->bobot_nilai($item3->nilai_akhir),
-                  'mutu' => $item3->sks * $this->bobot_nilai($item3->nilai_akhir),
-                ];
-                array_push($list[$value['nim']]['data'], $push);
+                'matkul' => $item3->mata_kuliah,
+                'sks' =>  $item3->sks,
+                'skala_nilai' => $this->skala_nilai($item3->nilai_akhir),
+                'bobot_nilai' => $this->bobot_nilai($item3->nilai_akhir),
+                'mutu' => $item3->sks * $this->bobot_nilai($item3->nilai_akhir),
+              ];
+              array_push($list[$value['nim']]['data'], $push);
                 
-                $total = $item3->sks * $this->bobot_nilai($item3->nilai_akhir) + $x;
-                $x = $total;
-              }
+              $total = $item3->sks * $this->bobot_nilai($item3->nilai_akhir) + $x;
+              $x = $total;
+            }
           }
           $list[$value['nim']]['total_mutu'] = $total;
         }
@@ -102,7 +102,7 @@ class HitungIpsController extends Controller
     }
     
     $request->session()->put('ip', $list);
-    return view('content.hitungips', compact('list'));
+    return view('content.hitungips', compact('list', 'semester'));
 
   }
 
@@ -150,32 +150,32 @@ class HitungIpsController extends Controller
 
   protected function skala_nilai($nilai) {
     $skala = null;
-    if ($nilai <= 100 && $nilai >= 92) $skala = 'A+';
-    else if ($nilai <= 91 && $nilai >= 84) $skala = 'A-';
-    else if ($nilai <= 83 && $nilai >= 75) $skala = 'B+';
-    else if ($nilai <= 74 && $nilai >= 67) $skala = 'B';
-    else if ($nilai <= 66 && $nilai >= 59) $skala = 'B-';
-    else if ($nilai <= 58 && $nilai >= 50) $skala = 'C+';
-    else if ($nilai <= 49 && $nilai >= 42) $skala = 'C';
-    else if ($nilai <= 41 && $nilai >= 34) $skala = 'C-';
-    else if ($nilai <= 33 && $nilai >= 25) $skala = 'D+';
-    else $skala = 'D';
+    if ($nilai <= 100 && $nilai >= 85) $skala = 'A';
+    else if ($nilai <= 84 && $nilai >= 80) $skala = 'A-';
+    else if ($nilai <= 79 && $nilai >= 75) $skala = 'B+';
+    else if ($nilai <= 74 && $nilai >= 70) $skala = 'B';
+    else if ($nilai <= 69 && $nilai >= 65) $skala = 'B-';
+    else if ($nilai <= 64 && $nilai >= 60) $skala = 'C+';
+    else if ($nilai <= 59 && $nilai >= 55) $skala = 'C';
+    else if ($nilai <= 54 && $nilai >= 50) $skala = 'C-';
+    else if ($nilai <= 50 && $nilai >= 40) $skala = 'D';
+    else if ($nilai <= 39) $skala = 'E';
     return $skala;
   }
 
 
   protected function bobot_nilai($nilai) {
     $bobot = null;
-    if ($nilai <= 100 && $nilai >= 92) $bobot = 4.00;
-    else if ($nilai <= 91 && $nilai >= 84) $bobot = 3.75;
-    else if ($nilai <= 83 && $nilai >= 75) $bobot = 3.50;
-    else if ($nilai <= 74 && $nilai >= 67) $bobot = 3.00;
-    else if ($nilai <= 66 && $nilai >= 59) $bobot = 2.75;
-    else if ($nilai <= 58 && $nilai >= 50) $bobot = 2.50;
-    else if ($nilai <= 49 && $nilai >= 42) $bobot = 2.00;
-    else if ($nilai <= 41 && $nilai >= 34) $bobot = 1.75;
-    else if ($nilai <= 33 && $nilai >= 25) $bobot = 1.00;
-    else $bobot = 1.00;
+    if ($nilai <= 100 && $nilai >= 85) $bobot = 4.00;
+    else if ($nilai <= 84 && $nilai >= 80) $bobot = 3.75;
+    else if ($nilai <= 79 && $nilai >= 75) $bobot = 3.50;
+    else if ($nilai <= 74 && $nilai >= 70) $bobot = 3.00;
+    else if ($nilai <= 69 && $nilai >= 65) $bobot = 2.75;
+    else if ($nilai <= 64 && $nilai >= 60) $bobot = 2.50;
+    else if ($nilai <= 59 && $nilai >= 55) $bobot = 2.00;
+    else if ($nilai <= 54 && $nilai >= 50) $bobot = 1.75;
+    else if ($nilai <= 50 && $nilai >= 40) $bobot = 1.50;
+    else if ($nilai <= 39) $bobot = 1.00;
     return $bobot;
   }
   

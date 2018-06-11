@@ -131,9 +131,9 @@
           </a>
         </li>
         <li>
-          <a href={{ $id == 'admin' ? url('/tampilipk') : 'javascript:void(0)' }}>
+          <a href={{ $id == 'admin' ? url('/validasi') : 'javascript:void(0)' }}>
             <i class="fa fa-pie-chart"></i>
-            <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="tampilipk">Hitung IPK</span>
+            <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="validasi">Hitung IPK</span>
           </a>
         </li>
         <li>

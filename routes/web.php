@@ -48,9 +48,11 @@ Route::middleware('key')->group(function() {
 
   Route::get('/tampilschedule', 'HitungIpsController@index')->name('hitung ips');
   Route::get('/hitungip/{semester}/{jurusan}', 'HitungIpsController@hitung')->name('tampilkan ips');
-  Route::post('/action', 'HitungIpsController@actionController')->name('entry ips');
+  Route::post('/action-ips', 'HitungIpsController@actionController')->name('entry ips');
   Route::get('/ajax/{nim}', 'HitungIpsController@ajax')->name('tampilkan ips');
 
-  Route::get('tampilipk', 'HitungIpkController@index')->name('hitung IPK');
+  Route::get('validasi', 'HitungIpkController@index')->name('validasi hitung IPK');
+  Route::get('hitungipk/{semester}', 'HitungIpkController@hitung')->name('hitung IPK');
+  Route::post('/action-ipk', 'HitungIpkController@actionController')->name('entry IPK');
   
 });

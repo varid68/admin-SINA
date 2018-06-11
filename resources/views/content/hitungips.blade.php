@@ -41,11 +41,11 @@
     </div>
   </div>
 
-  <form action="{{ URL('action') }}" method="POST">
+  <form action="{{ URL('action-ips') }}" method="POST">
   {{csrf_field()}}
   <div class="box">
     <div class="box-header">
-      <h3 class="box-title">Indeks Prestasi mahasiswa semester <strong>{{ Session::get('semester') }}</strong></h3>
+      <h3 class="box-title">Indeks Prestasi mahasiswa semester <strong>{{ $semester }}</strong></h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body no-padding">
