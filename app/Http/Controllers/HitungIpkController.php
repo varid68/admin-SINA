@@ -8,7 +8,13 @@ use Curl;
 class HitungIpkController extends Controller
 {
   public function index(Request $request) {
-    return view('content.validasiipk');
+    $key = $request->session()->get('key');
+
+    $result = Curl::to('https://chylaceous-thin.000webhostapp.com/public/counter/?key='.$key)
+		->asJson()
+    ->get();
+    
+    return view('content.validasiipk', compact('result'));
   }
 
 

@@ -124,13 +124,13 @@
             <span class="{{ $id != 'admin' ? '' : 'disable-link' }}" data-id="input-nilai">Input nilai</span>
           </a>
         </li>
-        <li>
+        <li id="hitung-ips">
           <a href={{ $id == 'admin' ? url('/tampilschedule') : 'javascript:void(0)' }}>
             <i class="fa fa-calculator"></i>
             <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="hitungip">Hitung IPS</span>
           </a>
         </li>
-        <li>
+        <li id="hitung-ipk">
           <a href={{ $id == 'admin' ? url('/validasi') : 'javascript:void(0)' }}>
             <i class="fa fa-pie-chart"></i>
             <span class="{{ $id == 'admin' ? '' : 'disable-link' }}" data-id="validasi">Hitung IPK</span>
@@ -193,12 +193,13 @@
 <script>
   (function addClassActive(){
     let split = location.href.split('/');
-    // let page = location.href.substr(location.href.lastIndexOf("/") + 1);
-    console.log(split);
     $('ul.sidebar-menu').find('li a span').each(function() {
       let parents = $(this).parents('li');
       $(this).data('id') == split[3] ? parents.addClass('active') : parents.removeClass('active');
     });
+
+    if (split[3] == 'hitungipk') $('ul.sidebar-menu').find('#hitung-ipk').addClass('active');
+    if (split[3] == 'tampilschedule') $('ul.sidebar-menu').find('#hitung-ips').addClass('active');
   }());
 </script>
 

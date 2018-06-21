@@ -16,7 +16,7 @@
 @endsection
 
 @section('heading')
-  Hitung Indeks Prestasi
+  Validasi Hitung IPS
 @endsection
 
 @section('content')

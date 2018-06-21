@@ -41,8 +41,9 @@
   animation: flickerAnimation 5s infinite;
 }
 
-#btn-modal-add,
+.margin,
 .btn-submit {
+  margin: 0px;
   margin-right: 10px;
 }
 

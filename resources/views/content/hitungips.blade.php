@@ -7,7 +7,7 @@
 @endsection
 
 @section('heading')
-  Hitung Indeks Prestasi
+  Hitung IPS mahasiswa
 @endsection
 
 @section('content')
@@ -79,7 +79,11 @@
     </div>
     <!-- /.box-body -->
   </div>
+  @if ($validasi != 'sudah')
   <button type="submit" class="btn btn-sm btn-success pull-right" name="action" value="entry">Entry IP</button>
+  @else
+  <button type="button" class="btn btn-sm btn-success pull-right" disabled>Entry IP</button>
+  @endif
   <button type="submit" class="btn btn-sm bg-purple pull-right" name="action" value="edit">Edit IP</button>
   </form>
 @endsection

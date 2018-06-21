@@ -59,7 +59,11 @@ class HitungIpsController extends Controller
     
     $_mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$_semester.'&jurusan='.$_jurusan)
 		->asJson()
-		->get();
+    ->get();
+    
+    $validasi = Curl::to('https://chylaceous-thin.000webhostapp.com/public/validasi-ips/'.$_semester.'?key='.$key)
+		->asJson()
+    ->get();
     
     $mahasiswa = json_decode(json_encode($_mahasiswa), true);
     $nim = [];
@@ -102,7 +106,7 @@ class HitungIpsController extends Controller
     }
     
     $request->session()->put('ip', $list);
-    return view('content.hitungips', compact('list', 'semester'));
+    return view('content.hitungips', compact('list', 'semester', 'validasi'));
 
   }
 

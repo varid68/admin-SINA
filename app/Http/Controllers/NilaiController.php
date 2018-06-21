@@ -47,6 +47,22 @@ class NilaiController extends Controller
 	}
 
 
+	public function edit(Request $request) {
+		$input = $request->input();
+		$key = $request->session()->get('key');
+		$nim = $request->input('nim');
+		$id_matkul = $request->session()->get('id');
+
+		unset($input['_token']);
+
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/edit-nilai/?key='.$key.'&nim='.$nim.'&id_matkul='.$id_matkul)
+		->withData($input)
+		->post();
+
+    return redirect('/nilai');
+	}
+
+
 	public function downloadPdf(Request $request) {
 		$matkul = $request->session()->get('mata_kuliah');
 		$nilai = json_decode($request->session()->get('nilai'));

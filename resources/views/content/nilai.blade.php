@@ -1,5 +1,21 @@
 @extends('layout')
 
+@section('head')
+  <style>
+    #myModal .grade {
+      text-align: center;
+    }
+    #myModal .grade {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 65px;
+      line-height: 45px;
+      height: 80px;
+    }
+  </style>
+@endsection
+
 @section('heading')
   Nilai
 @endsection
@@ -30,7 +46,9 @@
         <tr>
           <td>{{ $no++ }}</td>
           <td>{{ $item["nim"] }}</td>
-          <td>{{ $item["nama"] }}</td>
+          <td>
+            <a data-toggle="modal" href="#myModal">{{ $item["nama"] }}</a>
+          </td>
           <td>{{ $item["jurusan"] }}</td>
           <td>{{ $item["absensi"] }}</td>
           <td>{{ $item["tugas"] }}</td>
@@ -43,11 +61,73 @@
     </div>
     <!-- /.box-body -->
   </div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form method="POST" action="{{ url('nilai') }}">
+        {{ csrf_field() }}
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-2">Nim</div>
+            <div class="col-md-4 nim">: ---</div>
+            <div class="col-md-2">Nama</div>
+            <div class="col-md-4 nama">: ---</div>
+          </div><br />
+
+          <div class="row">
+            <div class="col-md-2">Nilai Absensi</div>
+            <div class="col-md-4">
+              <input type="number" name="absensi" class="form-control input-sm absensi" required />
+            </div>
+            <div class="col-md-2">Nilai Tugas</div>
+            <div class="col-md-4">
+              <input type="number" name="tugas" class="form-control input-sm tugas" required />
+            </div>
+          </div><br />
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-4">Nilai UTS</div>
+                <div class="col-md-8">
+                  <input type="number" name="uts" class="form-control input-sm uts" required />
+                </div>
+              </div><br />
+              <div class="row">
+                <div class="col-md-4">Nilai UAS</div>
+                <div class="col-md-8">
+                  <input type="number" name="uas" class="form-control input-sm uas" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 grade">
+              <input type="hidden" name="nim" class="nim2" />
+              <input type="hidden" name="nilai_akhir" class="nilai-akhir" />
+              <span class="skala-nilai">89 (c+)</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  
 @endsection
 @section('script')
-  <script>
-    $('#btn-modal-download').click(function() {
-      window.location = '/nilai-pdf';
-    });
-  </script>
+  <script src="{{ asset('js/custom/nilai.js') }}"></script>
 @endsection

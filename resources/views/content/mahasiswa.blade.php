@@ -24,7 +24,13 @@
           @php $id = Session::get('id'); @endphp
           <button class="btn btn-sm btn-warning pull-right" id="btn-modal-filter">download pdf</button>
           @if ($id == 'admin')
-          <button class="btn btn-sm btn-success pull-right" id="btn-modal-add">tambah</button>
+          <button class="btn btn-sm btn-success margin pull-right" id="btn-modal-add">tambah</button>
+          <a href={{ url('mahasiswa/up-grades') }}>
+            <button class="btn btn-sm btn-default margin pull-right"><i class="fa fa-arrow-up"></i></button>
+          </a>
+          <a href={{ url('mahasiswa/down-grades') }}>
+            <button class="btn btn-sm btn-default margin pull-right"><i class="fa fa-arrow-down"></i></button>
+          </a>
           @endif
         </div>
         <!-- /.box-header -->

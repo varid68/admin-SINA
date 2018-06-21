@@ -72,7 +72,7 @@ class RemidialController extends Controller
 			"nilai_akhir" => $request->input('nilai_akhir'),
 		];
 
-		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/edit/?key='.$key)
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/edit-remidial/?key='.$key)
 			->withData($data)
 			->asJson(true)
 			->post();

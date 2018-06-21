@@ -15,15 +15,13 @@
       </div>
     </div>
 
+    @foreach($result as $item)
     <div class="col-md-6">
-      <a href={{ url('hitungipk/I') }}>
-        <button type="button" class="btn btn-block bg-purple">Pilih Semester I</button>
+      <a href={{ url("hitungipk/$item->semester") }}>
+        <button type="button" class="btn btn-block bg-purple">Pilih Semester {{ $item->semester }}</button>
       </a>
     </div>
-    <div class="col-md-6">
-      <a href={{ url('hitungipk/III') }}>
-        <button type="button" class="btn btn-block bg-purple">Pilih Semester III</button>
-      </a>
-    </div>
+    @endforeach
+
   </div>
 @endsection

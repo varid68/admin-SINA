@@ -24,6 +24,26 @@ class MahasiswaController extends Controller
 		return view('content.mahasiswa');
 	}
 
+
+	public function upgrades(Request $request) {
+		$key = $request->session()->get('key');
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/up-grades/?key='.$key)
+				->asJson()
+				->get();
+		
+		return redirect('/mahasiswa');
+	}
+
+
+	public function downgrades(Request $request) {
+		$key = $request->session()->get('key');
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/down-grades/?key='.$key)
+				->asJson()
+				->get();
+		
+		return redirect('/mahasiswa');
+	}
+
 	
 	public function datatable(Request $request) {
 		$key = $request->session()->get('key');

@@ -29,7 +29,8 @@ Route::middleware('key')->group(function() {
   Route::delete('/news/{id}', 'NewsController@delete')->name('delete news');
 
   Route::get('/mahasiswa', 'MahasiswaController@index')->name('list all students');
-  // Route::get('/mahasiswa/delete/{id}', 'MahasiswaController@delete')->name('list all students');
+  Route::get('/mahasiswa/up-grades', 'MahasiswaController@upgrades')->name('list all students');
+  Route::get('/mahasiswa/down-grades', 'MahasiswaController@downgrades')->name('list all students');
   Route::post('/mahasiswa/input', 'MahasiswaController@input')->name('list all students');
   Route::post('/mahasiswa/edit', 'MahasiswaController@edit')->name('list all students');
   Route::get('/mahasiswa-pdf', 'MahasiswaController@downloadPdf')->name('download students list');
@@ -37,6 +38,7 @@ Route::middleware('key')->group(function() {
   Route::delete('/mahasiswa/{id}', 'MahasiswaController@delete')->name('delete mahasiswa');
   
   Route::get('/nilai', 'NilaiController@index')->name('list of students score');
+  Route::post('/nilai', 'NilaiController@edit')->name('edit score');
   Route::get('/nilai-pdf', 'NilaiController@downloadPdf')->name('download students score');
 
   Route::get('/input-nilai/{page?}', 'InputNilaiController@index')->name('show view');
