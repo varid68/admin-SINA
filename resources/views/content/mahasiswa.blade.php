@@ -252,4 +252,5 @@
       $('#general-modal').find('form').attr('action', "{{ url('mahasiswa/edit') }}");
     });
   </script>
+@include('sweet::alert')
 @endsection

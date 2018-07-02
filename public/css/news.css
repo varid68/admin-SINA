@@ -18,19 +18,28 @@
 
 #preview {
   overflow-y: scroll;
-  height: 333px;
-  width: 214px;
+  height: 395px;
+  width: 207.67px;
   background-color: #fff;
   padding: 10px;
   font-size: 10px;
   position: absolute;
-  top: 104px;
-  left: 19px;
+  top: 78px;
+  left: 21px;
   text-align: justify;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+#bottom {
+  position: absolute;
+  bottom: 14.7px;
+  z-index: 2;
+  left: 71px;
 }
 
 ::-webkit-scrollbar {
-  width: 0.3em;
+  width: 0em;
 }
 
 ::-webkit-scrollbar-track-piece {

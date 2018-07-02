@@ -13,6 +13,7 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "~2.1.0",
+        "uxweb/sweet-alert": "^1.4",
         "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {

@@ -31,7 +31,7 @@ $(function () {
   }
 
   function onSuccess(data) {
-    const object = `{"id":"admin","semester":"none","mata_kuliah":"none"}`;
+    const object = `{"id":"admin","semester":"none","mata_kuliah":"none","gender":"laki"}`;
 
     if (data != 'Wrong Password') {
       if (data.auth.nama == 'admin') window.location = '/login/' + object;

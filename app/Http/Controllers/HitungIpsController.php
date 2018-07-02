@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Curl;
+use Carbon\Carbon;
 
 class HitungIpsController extends Controller
 {
@@ -54,6 +55,7 @@ class HitungIpsController extends Controller
   public function hitung(Request $request, $semester, $jurusan) {
     $key = $request->session()->get('key');
     $request->session()->put('selectedSemester', $semester);
+    $request->session()->put('selectedJurusan', $jurusan);
     $_semester = urlencode($semester);
     $_jurusan = urlencode($jurusan);
     
@@ -131,12 +133,21 @@ class HitungIpsController extends Controller
 
   public function edit($request) {
     $key = $request->session()->get('key');
-    $semester = $request->session()->get('selectedSemester');
     $input = $request->input();
-    unset($input['_token']);
+    $data['ips'] = $input;
 
-    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/editips/'.$semester.'/?key='.$key)
-    ->withData($input)
+    $jurusan = $request->session()->get('selectedJurusan');
+    $semester = $request->session()->get('selectedSemester');
+    $_jurusan = urlencode($jurusan);
+    $_semester = urlencode($semester);
+    
+    $data['timeline']['content'] = 'IPS mahasiswa jurusan '.$jurusan.' semester '.$semester.' telah diupdate, Silahkan Update kembali IPK Mahasiswa';
+		$data['timeline']['updated_at'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
+    unset($data['ips']['_token']);
+    unset($data['ips']['action']);
+    
+    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/editips/?key='.$key.'&semester='.$_semester.'&jurusan='.$_jurusan)
+    ->withData($data)
     ->post();
   }
 
@@ -186,9 +197,9 @@ class HitungIpsController extends Controller
 
   protected function hitung_total_sks($array) {
     $x = 0;
-    foreach ($array as $value) {
-      foreach ($value as $item) {
-        foreach ($item as $item2) {
+    foreach ((array) $array as $value) {
+      foreach ((array) $value as $item) {
+        foreach ((array) $item as $item2) {
           $total = $item2->sks + $x;
           $x = $total;
         }

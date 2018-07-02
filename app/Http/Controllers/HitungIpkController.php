@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Curl;
+use Carbon\Carbon;
 
 class HitungIpkController extends Controller
 {
@@ -79,10 +80,15 @@ class HitungIpkController extends Controller
   public function edit($request) {
     $key = $request->session()->get('key');
     $input = $request->input();
-    unset($input['_token']);
 
+    $data['ipk'] = $input;
+    $data['timeline']['content'] = 'IPK mahasiswa telah diupdate oleh admin';
+		$data['timeline']['updated_at'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
+    unset($data['ipk']['_token']);
+    unset($data['ipk']['action']);
+    
     $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/editipk/?key='.$key)
-    ->withData($input)
+    ->withData($data)
     ->post();
   }
 

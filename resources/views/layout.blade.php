@@ -61,13 +61,21 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ asset('images/user2-160x160.png') }}" class="user-image" alt="User Image">
+              @if(Session::get('gender') == 'laki')
+              <img src="{{ asset('images/male.png') }}" class="user-image" alt="User Image">
+              @else
+              <img src="{{ asset('images/female.png') }}" class="user-image" alt="User Image">
+              @endif
               <span class="hidden-xs">{{ Session::get('dosenWithoutTitle') }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset('images/user2-160x160.png') }}" class="img-circle" alt="User Image">
+                @if(Session::get('gender') == 'laki')
+                <img src="{{ asset('images/male.png') }}" class="img-circle" alt="User Image">
+                @else
+                <img src="{{ asset('images/female.png') }}" class="img-circle" alt="User Image">
+                @endif
                 <p>
                   {{ Session::get('dosenWithoutTitle') }} - {{ Session::get('mata_kuliah') }}
                   <small>Member since Nov. 2012</small>
@@ -94,7 +102,11 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset('images/user2-160x160.png') }}" class="img-circle" alt="User Image">
+          @if(Session::get('gender') == 'laki')
+          <img src="{{ asset('images/male.png') }}" class="user-image" alt="User Image">
+          @else
+          <img src="{{ asset('images/female.png') }}" class="user-image" alt="User Image">
+          @endif
         </div>
         <div class="pull-left info">
           <p>{{ Session::get('dosenWithoutTitle') }}</p>
@@ -146,6 +158,12 @@
           <a href="{{ url('/news/1') }}">
             <i class="fa fa-bullhorn"></i>
             <span data-id="news">News</span>
+          </a>
+        </li>
+        <li id="timeline">
+          <a href={{ url('/timeline') }}>
+            <i class="fa fa-balance-scale"></i>
+            <span data-id="timeline">Timeline</span>
           </a>
         </li>
       </ul>

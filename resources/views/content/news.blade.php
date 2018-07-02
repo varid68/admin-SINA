@@ -14,7 +14,8 @@
   <div id="container" data-session="{{ Session::get('dosen') }}">
 
     <div id="preview-container">
-      <img src="{{ asset('images/preview.png') }}">
+      <img src="{{ asset('images/notch.png') }}">
+      <img src="{{ asset('images/notch-bottom.png') }}" id="bottom">
       <div id="preview">
         Klik Content kolom untuk menampilkan preview di sini..
       </div>
@@ -223,7 +224,6 @@
       interval = setInterval(function () {
         $('.progress-bar').css('width', width + '%');
         width = width < 100 ? width + 10 : 10;
-        console.log(width);
       }, 1000);
     }
 
@@ -301,4 +301,5 @@
       });
     });
   </script>
+@include('sweet::alert')
 @endsection

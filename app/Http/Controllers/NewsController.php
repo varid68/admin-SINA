@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use OneSignal;
+use Alert;
 
 class NewsController extends Controller
 {
@@ -43,14 +44,22 @@ class NewsController extends Controller
 		$check_length = strlen($title) > 85 ? substr($title,0,85) : $title;
 		$notif = preg_replace('/\W\w+\s*(\W*)$/', '$1', $check_length).'...';
 		OneSignal::sendNotificationToAll($notif, $url = null, $data = null, $buttons = null, $schedule = null);
+
 		return redirect('/news/1');
 	}
 	
 
 	public function delete(Request $request, $id) {
-		$key = $request->session()->get('key');		
+		$key = $request->session()->get('key');
 		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/news/'.$id.'/?key='.$key)
 			->get();
+
+		$result = $response == null ? 'gagal' : 'sukses';
+		if ($result == 'gagal') {
+			Alert::error('berita belum di hapus', 'Gagal!')->autoclose(4000);
+		} else {
+			Alert::success('berita berhasil di hapus', 'Sukses!')->autoclose(4000);
+		}
 
 		return redirect('/news');
 	}

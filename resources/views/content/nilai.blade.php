@@ -14,6 +14,7 @@
       height: 80px;
     }
   </style>
+  <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}" />
 @endsection
 
 @section('heading')
@@ -130,4 +131,6 @@
 @endsection
 @section('script')
   <script src="{{ asset('js/custom/nilai.js') }}"></script>
+  <script src="https://unpkg.com/sweetalert2@7.6.3/dist/sweetalert2.all.js"></script>  
+@include('sweet::alert')
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use DataTables;
 use PDF;
+use Alert;
 
 class MahasiswaController extends Controller
 {
@@ -109,6 +110,13 @@ class MahasiswaController extends Controller
 			->withData(['nim' => $nim, 'nama' => $nama, 'gender' => $gender, 'ttl' => $ttl, 'alamat' => $alamat, 'jurusan' => $jurusan, 'tahun_masuk' => $tahun_masuk, 'semester' => $semester])
 			->asJson(true)
 			->post();
+		
+		$result = $response == null ? 'gagal' : 'sukses';
+		if ($result == 'gagal') {
+			Alert::error('data mahasiswa baru belum ditambahkan', 'Gagal!')->autoclose(4000);
+		} else {
+			Alert::success('data mahasiswa berhasil dientry', 'Sukses!')->autoclose(4000);
+		}
 
 		return redirect ('/mahasiswa');
 	}
@@ -130,6 +138,13 @@ class MahasiswaController extends Controller
 			->asJson(true)
 			->post();
 
+		$result = $response == null ? 'gagal' : 'sukses';
+		if ($result == 'gagal') {
+			Alert::error('data mahasiswa belum terupdate', 'Gagal!')->autoclose(4000);
+		} else {
+			Alert::success('data mahasiswa berhasil diupdate', 'Sukses!')->autoclose(4000);
+		}
+
 		return redirect ('/mahasiswa');
 	}
 
@@ -140,6 +155,13 @@ class MahasiswaController extends Controller
 		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/'.$id.'/?key='.$key)
 		->asJson()
 		->get();
+
+		$result = $response == null ? 'gagal' : 'sukses';
+		if ($result == 'gagal') {
+			Alert::error('data mahasiswa baru belum ditambahkan', 'Gagal!')->autoclose(4000);
+		} else {
+			Alert::success('data mahasiswa berhasil dihapus', 'Sukses!')->autoclose(4000);
+		}
 
 		return redirect ('/mahasiswa');
 	}

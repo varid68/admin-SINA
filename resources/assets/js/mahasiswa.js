@@ -49,7 +49,6 @@ $(document).on('click', '.delete', function () {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.value) {
-      console.log(id);
       $('#delete-form').attr('action', '/mahasiswa/' + id).submit();
     }
   })

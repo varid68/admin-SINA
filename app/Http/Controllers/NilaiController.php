@@ -5,31 +5,34 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Curl;
 use PDF;
+use Alert;
+use Carbon\Carbon;
 
 class NilaiController extends Controller
 {
   public function index(Request $request) {
+		
 		$key = $request->session()->get('key');
 		$semester = urlencode($request->session()->get('semester'));
 		$id_matkul = $request->session()->get('id');
 		$jurusan = urlencode($request->session()->get('jurusan'));
 		
 		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&jurusan='.$jurusan)
-			->asJson()
-			->get();
-
+		->asJson()
+		->get();
+		
 		$nilai = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/?key='.$key.'&semester='.$semester.'&id_matkul='.$id_matkul)
-			->asJson()
-			->get();
-
+		->asJson()
+		->get();
+		
 		$list = [];
-
+		
 		foreach ((array) $mahasiswa as $item) {
 			$counter = 0;
 			foreach ((array) $nilai as $value) {
 				if ($item->nim == $value->nim) {
 					$push = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "absensi" => $value->absensi, "tugas" => $value->tugas, 
-									"uts" => $value->uts, "uas" => $value->uas, "nilai_akhir" => $value->nilai_akhir, "grade" => $this->grade($value->nilai_akhir)]; 
+					"uts" => $value->uts, "uas" => $value->uas, "nilai_akhir" => $value->nilai_akhir, "grade" => $this->grade($value->nilai_akhir)]; 
 					array_push($list, $push);
 				}
 				if ($item->nim != $value->nim) $counter++;		
@@ -37,28 +40,42 @@ class NilaiController extends Controller
 			
 			if ($counter == count($nilai)) {
 				$new = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "absensi" => 0, "tugas" => 0, "uts" => 0,
-							"uas" => 0, "nilai_akhir" => 0, "grade" => "E"];
+				"uas" => 0, "nilai_akhir" => 0, "grade" => "E"];
 				array_push($list, $new);
 			}
 		}
-
+		
 		$request->session()->put('nilai', json_encode($list));
 		return view('content.nilai', compact('list'));
 	}
-
-
+	
+	
 	public function edit(Request $request) {
 		$input = $request->input();
 		$key = $request->session()->get('key');
 		$nim = $request->input('nim');
 		$id_matkul = $request->session()->get('id');
 
-		unset($input['_token']);
+		$semester = $request->session()->get('semester');
+		$jurusan = $request->session()->get('jurusan');
+		$mata_kuliah = $request->session()->get('mata_kuliah');
+		$dosen = $request->session()->get('dosen');
 
+		unset($input['_token']);
+		$input['content'] = 'nilai mata kuliah '.$mata_kuliah.' jurusan '.$jurusan.' semester '.$semester.' telah diupdate oleh '.$dosen.', Silahkan hitung kembali IPS dan IPK';
+		$input['updated_at'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
+		
 		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/nilai/edit-nilai/?key='.$key.'&nim='.$nim.'&id_matkul='.$id_matkul)
 		->withData($input)
 		->post();
-
+		
+		$result = $response == null ? 'gagal' : 'sukses';
+		if ($result == 'gagal') {
+			Alert::error('nilai gagal diupdate', 'Gagal!')->autoclose(4000);
+		} else {
+			Alert::success('nilai berhasil diupdate', 'Sukses!')->autoclose(4000);
+		}
+		
     return redirect('/nilai');
 	}
 
