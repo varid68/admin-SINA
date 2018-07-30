@@ -1,6 +1,5 @@
 $(function () {
   let tugas = 0;
-  let absensi = 0;
   let uts = 0;
   let hasilAkhir = [];
 
@@ -16,34 +15,25 @@ $(function () {
     }
   }());
 
-  // menghitung nilai absensi 
-  $('.absensi').keyup(function (e) {
-    const Hasil = ((e.target.value / 14) * 10 / 100) * 100;
-    absensi = parseInt(Hasil.toFixed(2));
-    const indexElem = $('.absensi').index(this);
-    hasilAkhir[indexElem][0] = absensi;
-  });
-
-
   // menghitung nilai tugas 30%
   $('.tugas').keyup(function (e) {
     tugas = parseInt(20 / 100 * e.target.value);
     const indexElem = $('.tugas').index(this);
-    hasilAkhir[indexElem][1] = tugas;
+    hasilAkhir[indexElem][0] = tugas;
   });
 
   //menghitung nilai uts 30%
   $('.uts').keyup(function (e) {
     uts = parseInt(30 / 100 * e.target.value);
     const indexElem = $('.uts').index(this);
-    hasilAkhir[indexElem][2] = uts;
+    hasilAkhir[indexElem][1] = uts;
   });
 
   // menghitung nilai uas 40%
   $('.uas').keyup(function (e) {
-    uas = parseInt(40 / 100 * e.target.value);
+    uas = parseInt(50 / 100 * e.target.value);
     const indexElem = $('.uas').index(this);
-    const i = hasilAkhir[indexElem][0] + hasilAkhir[indexElem][1] + hasilAkhir[indexElem][2] + uas;
+    const i = hasilAkhir[indexElem][0] + hasilAkhir[indexElem][1] + uas;
     if (e.target.value != '') gradeNilai(i, indexElem);
   });
 

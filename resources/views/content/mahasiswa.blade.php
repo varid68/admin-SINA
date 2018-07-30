@@ -45,7 +45,7 @@
                 <th style="width: 22%">TTl</th>
                 <th style="width: 10%">Jurusan</th>
                 <th style="width: 10%">Semester</th>
-                <th style="width: 10%">Alamat</th>
+                <th style="width: 10%">Opsi</th>
               </tr>
             </thead>
           </table>
@@ -56,17 +56,17 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body">
-              <div class="row-container">
-                <p class="first-column">Nama lengkap : </p>
-                <p class="second-column modal-nama"> -- </p>
+              <div class="row">
+                <p class="col-md-3">Nama lengkap </p>
+                <p class="col-md-9 modal-nama"> -- </p>
               </div>
-              <div class="row-container">
-                <p class="first-column">Nim : </p>
-                <p class="second-column modal-nim"> -- </p>
+              <div class="row">
+                <p class="col-md-3">Nim </p>
+                <p class="col-md-9 modal-nim"> -- </p>
               </div>
-              <div class="row-container">
-                <p class="first-column">Alamat lengkap : </p>
-                <p class="second-column modal-alamat"> -- </p>
+              <div class="row">
+                <p class="col-md-3">Alamat lengkap </p>
+                <p class="col-md-9 modal-alamat"> -- </p>
               </div>
             </div>
             <div class="modal-footer">
@@ -212,12 +212,9 @@
                   <select id="semester-modal" class="form-control input-sm">
                     <option selected disabled>pilih semester</option>
                     <option value="none">Semua semester</option>
-                    <option value="I">I</option>
-                    <option value="II">II</option>
-                    <option value="Akselerasi I">Akselerasi I</option>
-                    <option value="III">III</option>
-                    <option value="IV">IV</option>
-                    <option value="Akselerasi II">Akselerasi II</option>
+                    @foreach((array) $counter as $item)
+                    <option value="{{ $item->semester }}">{{ $item->semester }}</option>                      
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -226,7 +223,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-success pull-right" id="btn-download">Download PDF</button>
+              <button type="button" class="btn btn-sm btn-success pull-right" id="btn-preview">Preview</button>
             </div>
           </div>
         </div>

@@ -36,7 +36,6 @@
           <th style="width: 8%">NIM</th>
           <th style="width: 25%">Nama</th>
           <th style="width: 10%">Jurusan</th>
-          <th style="width: 10%">Absensi</th>
           <th style="width: 10%">Tugas</th>
           <th style="width: 10%">Uts</th>
           <th style="width: 10%">Uas</th>
@@ -51,7 +50,6 @@
             <a data-toggle="modal" href="#myModal">{{ $item["nama"] }}</a>
           </td>
           <td>{{ $item["jurusan"] }}</td>
-          <td>{{ $item["absensi"] }}</td>
           <td>{{ $item["tugas"] }}</td>
           <td>{{ $item["uts"] }}</td>
           <td>{{ $item["uas"] }}</td>
@@ -84,10 +82,6 @@
           </div><br />
 
           <div class="row">
-            <div class="col-md-2">Nilai Absensi</div>
-            <div class="col-md-4">
-              <input type="number" name="absensi" class="form-control input-sm absensi" required />
-            </div>
             <div class="col-md-2">Nilai Tugas</div>
             <div class="col-md-4">
               <input type="number" name="tugas" class="form-control input-sm tugas" required />

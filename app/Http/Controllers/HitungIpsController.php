@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Curl;
+use PDF;
 use Carbon\Carbon;
 
 class HitungIpsController extends Controller
@@ -63,10 +64,16 @@ class HitungIpsController extends Controller
 		->asJson()
     ->get();
     
-    $validasi = Curl::to('https://chylaceous-thin.000webhostapp.com/public/validasi-ips/'.$_semester.'?key='.$key)
+    $_validasi = Curl::to('https://chylaceous-thin.000webhostapp.com/public/validasi-ips/'.$_semester.'?key='.$key)
 		->asJson()
     ->get();
-    
+
+    $validasi = 0;
+    foreach ($_validasi as $value) {
+      if ($value->MI == 'sudah') $validasi++;
+      if ($value->KA == 'sudah') $validasi++;
+    }
+
     $mahasiswa = json_decode(json_encode($_mahasiswa), true);
     $nim = [];
 
@@ -122,10 +129,13 @@ class HitungIpsController extends Controller
   public function entry($request) {
     $key = $request->session()->get('key');
     $semester = $request->session()->get('selectedSemester');
+    $jurusan = $request->session()->get('selectedJurusan');
+    $a = $jurusan == 'Manajemen Informatika' ? 'MI' : 'KA';
+
     $input = $request->input();
     unset($input['_token']);
-
-    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/entryips/'.$semester.'/?key='.$key)
+    unset($input['action']);
+    $response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/entryips/'.$semester.'/?key='.$key.'&jurusan='.$a)
     ->withData($input)
     ->post();
   }
@@ -152,14 +162,29 @@ class HitungIpsController extends Controller
   }
 
 
-  public function ajax(Request $request, $nim) {
+  public function ajax(Request $request, $nim, $a = true) {
     $sesi = $request->session()->get('ip');
     $new = [];
 
     foreach ($sesi as $key => $value) {
       if ($key == $nim) $new = $value;
     }
-    return response()->json($new);
+    if ($a) return response()->json($new);
+    else return $new;
+  }
+
+
+  public function downloadPdf(Request $request, $nim) {
+    $response = $this->ajax($request, $nim, false);
+
+    $key = $request->session()->get('key');
+
+		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/'.$nim.'/?key='.$key)
+		->asJson()
+    ->get();
+    
+    $pdf = PDF::loadView('pdf.ipspdf', compact('response', 'mahasiswa'))->setPaper('a4','potrait');
+    return $pdf->stream('ips-mahasiswa.pdf');
   }
 
 

@@ -84,11 +84,14 @@
             <td>{{ $no++ }}</td>
             <td>{{ $key }}</td>
             <td>{{ $item['nama'] }}</td>
-            @foreach($item['ip'] as $ips)
+            @foreach((array) $item['ip'] as $ips)
               <td class="num-ip">{{ $ips }}</td>
             @endforeach
+            @if ($col != count($item['ip']))
+              <td class="num-ip">0.00</td>
+            @endif
             <td class="num-ip">{{ $item['total'] }}</td>
-            @php $ipk = round($item['total'] / $col, 2); @endphp
+            @php $ipk = round($item['total'] / count($item['ip']), 2); @endphp
             <td class="num-ip">{{ $ipk }}</td>
             <input type="hidden" name={{ $key }} value={{ $ipk }} />
           </tr>

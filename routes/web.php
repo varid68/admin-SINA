@@ -29,11 +29,13 @@ Route::middleware('key')->group(function() {
   Route::delete('/news/{id}', 'NewsController@delete')->name('delete news');
 
   Route::get('/mahasiswa', 'MahasiswaController@index')->name('list all students');
+  Route::get('/academic-board/{nim}', 'MahasiswaController@academic_board')->name('papan nilai');
   Route::get('/mahasiswa/up-grades', 'MahasiswaController@upgrades')->name('naik semester');
   Route::get('/mahasiswa/down-grades', 'MahasiswaController@downgrades')->name('turun semester');
   Route::post('/mahasiswa/input', 'MahasiswaController@input')->name('entry calon mahasiswa');
   Route::post('/mahasiswa/edit', 'MahasiswaController@edit')->name('edit mahasiswa');
-  Route::get('/mahasiswa-pdf', 'MahasiswaController@downloadPdf')->name('download students list');
+  Route::get('/mahasiswa/download-pdf', 'MahasiswaController@downloadPdf')->name('download students list');
+  Route::get('/mahasiswa/preview-pdf', 'MahasiswaController@previewPdf')->name('download students list');
   Route::get('/mahasiswa/datatable', 'MahasiswaController@datatable')->name('ajax datatable');
   Route::delete('/mahasiswa/{id}', 'MahasiswaController@delete')->name('delete mahasiswa');
   
@@ -52,6 +54,7 @@ Route::middleware('key')->group(function() {
   Route::get('/hitungip/{semester}/{jurusan}', 'HitungIpsController@hitung')->name('tampilkan IPS');
   Route::post('/action-ips', 'HitungIpsController@actionController')->name('entry IPS');
   Route::get('/ajax/{nim}', 'HitungIpsController@ajax')->name('preview detail IPS');
+  Route::get('/download-pdf/{nim}', 'HitungIpsController@downloadPdf')->name('download IPS');
 
   Route::get('validasi', 'HitungIpkController@index')->name('validasi hitung IPK');
   Route::get('hitungipk/{semester}', 'HitungIpkController@hitung')->name('hitung IPK');

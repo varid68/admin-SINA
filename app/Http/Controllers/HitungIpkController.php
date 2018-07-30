@@ -21,26 +21,25 @@ class HitungIpkController extends Controller
 
   public function hitung(Request $request, $semester) {
     $key = $request->session()->get('key');
-    $_semester = urlencode($semester);
     $col = $this->convertSemesteToNumber($semester);
     $nim = [];
     $list = [];
 
-    $_mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$_semester.'&jurusan=general')
+    $_mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/?key='.$key.'&semester='.$semester.'&jurusan=general')
 		->asJson()
 		->get();
     
     $mahasiswa = json_decode(json_encode($_mahasiswa), true);
-
+    
     foreach ((array)$mahasiswa as $item) {
       array_push($nim, $item['nim']);
     }
-
+    
     $ips = Curl::to('https://chylaceous-thin.000webhostapp.com/public/fetch-ips/?key='.$key)
     ->withData($nim)
     ->asJson()
     ->post();
-
+    
     foreach ($ips as $key => $value) {
       $list[$key] = [];
       $list[$key]['ip'] = [];
@@ -56,6 +55,7 @@ class HitungIpkController extends Controller
       $list[$key]['total'] = $total;
     }
 
+    
     return view('content.hitungipk', compact('semester', 'col', 'list'));
   }
   
@@ -102,7 +102,7 @@ class HitungIpkController extends Controller
       case 'II': $col = 2;
         break;
         
-      case 'Akselerasi I': $col = 3;
+      case 'Akselerasi+I': $col = 3;
         break;
         
       case 'III': $col = 4;

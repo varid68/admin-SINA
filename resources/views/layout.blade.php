@@ -83,6 +83,9 @@
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
+                {{-- <div class="pull-left">
+                  <a data-toggle="modal" href="#myModal" class="btn btn-default btn-flat">Ubah Sandi</a>
+                </div> --}}
                 <div class="pull-right">
                   <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
                 </div>
@@ -93,6 +96,47 @@
       </div>
     </nav>
   </header>
+
+  <!-- Modal -->
+  {{-- <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">Password lama</div>
+            <div class="col-md-6 nim">
+              <input type="password" name="password_lama" class="form-control input-sm" required />
+            </div>
+          </div><br />
+
+          <div class="row">
+            <div class="col-md-6">Password baru</div>
+            <div class="col-md-6">
+              <input type="password" name="password_baru" class="form-control input-sm" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">Retype password</div>
+            <div class="col-md-6">
+              <input type="password" name="password_ulang" class="form-control input-sm" required />
+            </div>
+          </div><br />
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div> --}}
 
 
   <!-- Left side column. contains the logo and sidebar -->

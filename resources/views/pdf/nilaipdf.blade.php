@@ -22,7 +22,6 @@
           <th style="width: 5%">#</th>
           <th style="width: 12%">NIM</th>
           <th style="width: 30%">Nama</th>
-          <th style="width: 10%">Absensi</th>
           <th style="width: 10%">Tugas</th>
           <th style="width: 10%">Uts</th>
           <th style="width: 10%">Uas</th>
@@ -34,7 +33,6 @@
           <td class="tg-rv4w center" width="5%">{{ $no++ }}</td>
           <td class="tg-rv4w" width="12%">{{ $item->nim }}</td>
           <td class="tg-rv4w" width="30%">{{ $item->nama }}</td>
-          <td class="tg-rv4w" width="10%">{{ $item->absensi }}</td>
           <td class="tg-rv4w" width="10%">{{ $item->tugas }}</td>
           <td class="tg-rv4w" width="10%">{{ $item->uts }}</td>
           <td class="tg-rv4w" width="10%">{{ $item->uas }}</td>

@@ -22,7 +22,46 @@ class MahasiswaController extends Controller
 
 			$request->session()->put('mahasiswa', $response);
 		}
-		return view('content.mahasiswa');
+
+		$counter = Curl::to('https://chylaceous-thin.000webhostapp.com/public/counter/?key='.$key)
+		->asJson()
+		->get();
+		
+		return view('content.mahasiswa', compact('counter'));
+	}
+
+
+	public function academic_board(Request $request, $nim) {
+		$key = $request->session()->get('key');
+
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/grade-point/'.$nim)
+				->asJson()
+				->get();
+
+		$mahasiswa = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/'.$nim.'/?key='.$key)
+		->asJson()
+    ->get();
+
+		$list = [];
+		$ipk = $response->ipk;
+		$semester = ['I', 'II', 'Akselerasi I', 'III', 'IV', 'Akselerasi II'];
+
+		foreach ($semester as $value){
+			foreach ((array) $response->final_scores as $key => $item){
+				if ($value == $item->semester){
+					$skala = ['skala' => $this->skala_nilai($item->nilai_akhir)];
+					$list[$value]['scores'][] = array_merge((array)$item, (array)$skala);
+				}
+			}
+
+			foreach ((array) $response->ips as $item){
+				if ($value == $item->semester){
+					$list[$value]['ips'] = $item->ip;
+				}
+			}
+		}
+
+		return view('content.academic-board', compact('list', 'mahasiswa','ipk'));
 	}
 
 
@@ -60,7 +99,12 @@ class MahasiswaController extends Controller
 			})
 			->addColumn('action',function($response){
           return 
-						'<button type="button" class="btn btn-sm btn-success detail" data-alamat="'.$response->alamat.'" data-toggle="modal" data-target="#modal-default">Detail</button>';
+						'<a href=academic-board/'.$response->nim.'>
+							<button type="button" class="btn btn-sm btn-success" title="Klik untuk melihat semua nilai akademik">
+								<i class="fa fa-search"></i>
+							</button>
+						</a>
+						<button type="button" class="btn btn-sm btn-success detail" data-alamat="'.$response->alamat.'" data-toggle="modal" data-target="#modal-default">Detail</button>';
 				})->make(true);
 		} else {
 			$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/all-mahasiswa/?key='.$key)
@@ -75,10 +119,15 @@ class MahasiswaController extends Controller
 			})
 			->addColumn('action',function($response){
           return
-						'<button type="button" class="btn btn-sm bg-purple detail" data-alamat="'.$response->alamat.'" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-default">
+						'<a href=academic-board/'.$response->nim.'>
+							<button type="button" class="btn btn-sm btn-success" title="Klik untuk melihat semua nilai akademik">
+								<i class="fa fa-search"></i>
+							</button>
+						</a>
+						<button type="button" class="btn btn-sm bg-purple detail" data-alamat="'.$response->alamat.'" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-default">
 							<i class="fa fa-info"></i>
 						</button>
-						<button type="button" class="btn btn-sm btn-info edit" data-alamat="'.$response->alamat.'" title="Klik untuk edit" data-toggle="modal" data-target="#general-modal">
+						<button type="button" class="btn btn-sm bg-purple edit" data-alamat="'.$response->alamat.'" title="Klik untuk edit" data-toggle="modal" data-target="#general-modal">
 							<i class="fa fa-paint-brush"></i>
 						</button>
 						<button type="button" class="btn btn-sm btn-danger delete" data-id="'.$response->nim.'" title="Klik untuk hapus">
@@ -113,9 +162,9 @@ class MahasiswaController extends Controller
 		
 		$result = $response == null ? 'gagal' : 'sukses';
 		if ($result == 'gagal') {
-			Alert::error('data mahasiswa baru belum ditambahkan', 'Gagal!')->autoclose(4000);
+			Alert::error('data mahasiswa baru belum ditambahkan', 'Gagal!')->autoclose(2000);
 		} else {
-			Alert::success('data mahasiswa berhasil dientry', 'Sukses!')->autoclose(4000);
+			Alert::success('data mahasiswa berhasil dientry', 'Sukses!')->autoclose(2000);
 		}
 
 		return redirect ('/mahasiswa');
@@ -140,9 +189,9 @@ class MahasiswaController extends Controller
 
 		$result = $response == null ? 'gagal' : 'sukses';
 		if ($result == 'gagal') {
-			Alert::error('data mahasiswa belum terupdate', 'Gagal!')->autoclose(4000);
+			Alert::error('data mahasiswa belum terupdate', 'Gagal!')->autoclose(2000);
 		} else {
-			Alert::success('data mahasiswa berhasil diupdate', 'Sukses!')->autoclose(4000);
+			Alert::success('data mahasiswa berhasil diupdate', 'Sukses!')->autoclose(2000);
 		}
 
 		return redirect ('/mahasiswa');
@@ -152,15 +201,15 @@ class MahasiswaController extends Controller
 	public function delete (Request $request, $id) {
 		$key = $request->session()->get('key');
 
-		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa/'.$id.'/?key='.$key)
+		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/mahasiswa-delete/'.$id.'/?key='.$key)
 		->asJson()
-		->get();
+		->post();
 
 		$result = $response == null ? 'gagal' : 'sukses';
 		if ($result == 'gagal') {
-			Alert::error('data mahasiswa baru belum ditambahkan', 'Gagal!')->autoclose(4000);
+			Alert::error('data mahasiswa gagal dihapus', 'Gagal!')->autoclose(2000);
 		} else {
-			Alert::success('data mahasiswa berhasil dihapus', 'Sukses!')->autoclose(4000);
+			Alert::success('data mahasiswa berhasil dihapus', 'Sukses!')->autoclose(2000);
 		}
 
 		return redirect ('/mahasiswa');
@@ -199,8 +248,63 @@ class MahasiswaController extends Controller
 			->asJson()
 			->get();
 		}
-
+		
 		$pdf = PDF::loadView('pdf.mahasiswapdf', compact('response'))->setPaper('a4','landscape');
     return $pdf->stream('list-mahasiswa.pdf');
 	}
+	
+	
+	public function previewPdf(Request $request) {
+		$id = $request->session()->get('id');
+		$jurusan = urlencode($request->query('jurusan'));
+		$_jurusan = $request->query('jurusan');
+		$semester = $request->query('semester');
+		$key = $request->session()->get('key');
+		
+		$a = urlencode($semester);
+		
+		if ($id != 'admin') {
+			$mahasiswa = $request->session()->get('mahasiswa');
+			
+			if ($jurusan == 'none' && $semester == 'none') $response = $mahasiswa;
+			elseif ($jurusan == 'none' && $semester != 'none') {
+				$response = array_filter($mahasiswa, function($e) use ($semester) {
+					return ($e->semester == $semester);
+				});
+			}
+			elseif ($semester == 'none' && $jurusan != 'none') {
+				$response = array_filter($mahasiswa, function($e) use ($_jurusan) {
+					return ($e->jurusan == $_jurusan);
+				});
+			}
+			else {
+				$response = array_filter($mahasiswa, function($e) use ($semester, $_jurusan) {
+					return ($e->semester == $semester && $e->jurusan == $_jurusan);
+				});
+			}
+			
+		} else {
+			$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/filter-mahasiswa/?key='.$key.'&semester='.$a.'&jurusan='.$jurusan)
+			->asJson()
+			->get();
+		}
+		
+		return view('pdf.preview-pdf', compact('response', 'jurusan', 'a'));
+	}
+	
+	
+	protected function skala_nilai($nilai) {
+    $skala = null;
+    if ($nilai <= 100 && $nilai >= 85) $skala = 'A';
+    else if ($nilai <= 84 && $nilai >= 80) $skala = 'A-';
+    else if ($nilai <= 79 && $nilai >= 75) $skala = 'B+';
+    else if ($nilai <= 74 && $nilai >= 70) $skala = 'B';
+    else if ($nilai <= 69 && $nilai >= 65) $skala = 'B-';
+    else if ($nilai <= 64 && $nilai >= 60) $skala = 'C+';
+    else if ($nilai <= 59 && $nilai >= 55) $skala = 'C';
+    else if ($nilai <= 54 && $nilai >= 50) $skala = 'C-';
+    else if ($nilai <= 50 && $nilai >= 40) $skala = 'D';
+    else if ($nilai <= 39) $skala = 'E';
+    return $skala;
+  }
 }

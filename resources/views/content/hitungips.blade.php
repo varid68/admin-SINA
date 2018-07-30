@@ -35,6 +35,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <a id="tag" href={{ url('download-pdf') }}>
+            <button type="button" class="btn bg-maroon">Cetak PDF</button>
+          </a>
         </div>
       </div>
 
@@ -79,7 +82,7 @@
     </div>
     <!-- /.box-body -->
   </div>
-  @if ($validasi != 'sudah')
+  @if ($validasi !== 2)
   <button type="submit" class="btn btn-sm btn-success pull-right" name="action" value="entry">Entry IP</button>
   @else
   <button type="button" class="btn btn-sm btn-success pull-right" disabled>Entry IP</button>
@@ -90,8 +93,13 @@
 
 @section('script')
   <script>
+    let url = '';
+
     $('.preview').click(function() {
       const nim = $(this).data('nim');
+      const getUrl = $('#tag').attr('href');
+      $('#tag').attr('href', getUrl+'/'+nim);
+      url = getUrl;
       $.ajax({
         type: "GET",
         url: '/ajax/'+nim,
@@ -139,6 +147,10 @@
           $('#myModal').modal('show');
         }
       });
+    });
+
+    $('#myModal').on('hidden.bs.modal', function () {
+      $('#tag').attr('href', url);
     });
   </script>
 @endsection

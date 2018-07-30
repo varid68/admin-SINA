@@ -8,9 +8,9 @@ $(document).on('click', '.detail', function () {
   const nama = selector.siblings().eq(2).text();
   const alamat = $(this).data('alamat');
 
-  $('.modal-nama').text(nama);
-  $('.modal-nim').text(nim);
-  $('.modal-alamat').text(alamat);
+  $('.modal-nama').text(`: ${nama}`);
+  $('.modal-nim').text(`: ${nim}`);
+  $('.modal-alamat').text(`: ${alamat}`);
 });
 
 $(document).on('click', '.edit', function () {
@@ -59,7 +59,7 @@ $('#btn-modal-filter').click(function () {
 });
 
 
-$('#btn-download').click(function () {
+$('#btn-preview').click(function () {
   const semester = $('#semester-modal').val();
   const jurusan = $('#jurusan-modal').val();
 
@@ -70,7 +70,8 @@ $('#btn-download').click(function () {
     $('#warning').hide();
   }
 
-  window.location = `/mahasiswa-pdf?semester=${semester}&jurusan=${jurusan}`;
+  window.location = `/mahasiswa/preview-pdf?semester=${semester}&jurusan=${jurusan}`;
+  // window.location = `/mahasiswa-pdf?semester=${semester}&jurusan=${jurusan}`;
 });
 
 $('.modal-footer .btn-danger').click(function () {
@@ -95,6 +96,6 @@ $(".table-hover").dataTable({
     { data: 'ttl', name: 'ttl', searchable: false, orderable: false },
     { data: 'jurusan', name: 'jurusan', searcable: false, orderable: false },
     { data: 'semester', name: 'semester', searcable: false, },
-    { data: 'action', width: '14%', name: 'action', orderable: false, searchable: false },
+    { data: 'action', width: '17%', name: 'action', orderable: false, searchable: false },
   ]
 });

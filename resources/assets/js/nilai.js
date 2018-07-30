@@ -1,4 +1,3 @@
-let _absensi = 0;
 let _tugas = 0;
 let _uts = 0;
 let _uas = 0;
@@ -12,32 +11,24 @@ $('a[href="#myModal"]').click(function () {
   $selector = $(this).parent().siblings();
   const nim = $selector.eq(1).text();
   const nama = $(this).text();
-  const absensi = $(this).parent().siblings().eq(3).text();
-  const tugas = $(this).parent().siblings().eq(4).text();
-  const uts = $(this).parent().siblings().eq(5).text();
-  const uas = $(this).parent().siblings().eq(6).text();
-  const nilaiAkhir = $(this).parent().siblings().eq(7).text();
+  const tugas = $(this).parent().siblings().eq(3).text();
+  const uts = $(this).parent().siblings().eq(4).text();
+  const uas = $(this).parent().siblings().eq(5).text();
+  const nilaiAkhir = $(this).parent().siblings().eq(6).text();
   const split = nilaiAkhir.split(' ');
 
   $('#myModal').find('.nim').text(`: ${nim}`);
   $('#myModal').find('.nama').text(`: ${nama}`);
-  $('#myModal').find('.absensi').val(absensi);
   $('#myModal').find('.tugas').val(tugas);
   $('#myModal').find('.uts').val(uts);
   $('#myModal').find('.uas').val(uas);
   $('#myModal').find('.nim2').val(nim);
   $('#myModal').find('.nilai-akhir').val(split[0]);
   $('#myModal').find('.skala-nilai').text(nilaiAkhir);
-  _absensi = parseInt((absensi / 14) * 10 / 100 * 100);
   _tugas = parseInt(20 / 100 * tugas);
   _uts = parseInt(30 / 100 * uts);
   _uas = parseInt(40 / 100 * uas);
   _nilai_akhir = split[0];
-});
-
-$('.absensi').keyup(function (e) {
-  _absensi = parseInt((e.target.value / 14) * 10 / 100) * 100;
-  calculate();
 });
 
 $('.tugas').keyup(function (e) {
@@ -51,12 +42,12 @@ $('.uts').keyup(function (e) {
 });
 
 $('.uas').keyup(function (e) {
-  _uas = parseInt(40 / 100 * e.target.value);
+  _uas = parseInt(50 / 100 * e.target.value);
   calculate();
 });
 
 function calculate() {
-  const nilai = _absensi + _tugas + _uts + _uas;
+  const nilai = _tugas + _uts + _uas;
   let grade = null;
 
   if (nilai <= 100 && nilai >= 85) grade = 'A';

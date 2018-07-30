@@ -56,9 +56,9 @@ class NewsController extends Controller
 
 		$result = $response == null ? 'gagal' : 'sukses';
 		if ($result == 'gagal') {
-			Alert::error('berita belum di hapus', 'Gagal!')->autoclose(4000);
+			Alert::error('berita belum di hapus', 'Gagal!')->autoclose(2000);
 		} else {
-			Alert::success('berita berhasil di hapus', 'Sukses!')->autoclose(4000);
+			Alert::success('berita berhasil di hapus', 'Sukses!')->autoclose(2000);
 		}
 
 		return redirect('/news');

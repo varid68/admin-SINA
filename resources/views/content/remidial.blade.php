@@ -28,7 +28,6 @@
               <th style="width: 3%">No.</th>
               <th style="width: 12%">Nim</th>
               <th style="width: 25%">Nama</th>
-              <th style="width: 10%">Absensi</th>
               <th style="width: 10%">Tugas</th>
               <th style="width: 10%">Uts</th>
               <th style="width: 10%">Uas</th>
@@ -42,10 +41,6 @@
               <td>{{ $item["nim"] }}</td>
               <td>{{ $item["nama"] }}</td>
               <form action="{{ url('remidial/edit') }}" method="GET">
-              <td>
-                <span>{{ $item["absensi"] }}</span>
-                <input type="number" name="absensi" min="0" max="14" class="form-control input-sm input absensi" value="{{ $item['absensi'] }}" data-absensi="{{ $item['absensi'] }}" autofocus required>
-              </td>
               <td>
                 <span>{{ $item["tugas"] }}</span>
                 <input type="number" name="tugas" min="0" max="100" class="form-control input-sm input tugas" value="{{ $item['tugas'] }}" data-tugas="{{ $item['tugas'] }}" required>                

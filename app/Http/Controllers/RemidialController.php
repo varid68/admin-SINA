@@ -28,7 +28,7 @@ class RemidialController extends Controller
 			$counter = 0;
 			foreach ((array) $nilai as $value) {
 				if ($item->nim == $value->nim) {
-					$push = ["nim" => $item->nim, "nama" => $item->nama, "absensi" => $value->absensi, "tugas" => $value->tugas, 
+					$push = ["nim" => $item->nim, "nama" => $item->nama, "tugas" => $value->tugas, 
 									"uts" => $value->uts, "uas" => $value->uas, "nilai_akhir" => $value->nilai_akhir, "grade" => $this->grade($value->nilai_akhir)]; 
 					array_push($list, $push);
 				}
@@ -36,7 +36,7 @@ class RemidialController extends Controller
 			}
 			
 			if ($counter == count($nilai)) {
-				$new = ["nim" => $item->nim, "nama" => $item->nama, "absensi" => 0, "tugas" => 0, "uts" => 0,
+				$new = ["nim" => $item->nim, "nama" => $item->nama, "tugas" => 0, "uts" => 0,
 							"uas" => 0, "nilai_akhir" => 0, "grade" => "D"];
 				array_push($list, $new);
 			}

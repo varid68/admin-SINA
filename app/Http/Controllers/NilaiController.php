@@ -31,7 +31,7 @@ class NilaiController extends Controller
 			$counter = 0;
 			foreach ((array) $nilai as $value) {
 				if ($item->nim == $value->nim) {
-					$push = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "absensi" => $value->absensi, "tugas" => $value->tugas, 
+					$push = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "tugas" => $value->tugas, 
 					"uts" => $value->uts, "uas" => $value->uas, "nilai_akhir" => $value->nilai_akhir, "grade" => $this->grade($value->nilai_akhir)]; 
 					array_push($list, $push);
 				}
@@ -39,7 +39,7 @@ class NilaiController extends Controller
 			}
 			
 			if ($counter == count($nilai)) {
-				$new = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "absensi" => 0, "tugas" => 0, "uts" => 0,
+				$new = ["nim" => $item->nim, "nama" => $item->nama, "jurusan" => $this->shorter($item->jurusan), "tugas" => 0, "uts" => 0,
 				"uas" => 0, "nilai_akhir" => 0, "grade" => "E"];
 				array_push($list, $new);
 			}
@@ -71,9 +71,9 @@ class NilaiController extends Controller
 		
 		$result = $response == null ? 'gagal' : 'sukses';
 		if ($result == 'gagal') {
-			Alert::error('nilai gagal diupdate', 'Gagal!')->autoclose(4000);
+			Alert::error('nilai gagal diupdate', 'Gagal!')->autoclose(2000);
 		} else {
-			Alert::success('nilai berhasil diupdate', 'Sukses!')->autoclose(4000);
+			Alert::success('nilai berhasil diupdate', 'Sukses!')->autoclose(2000);
 		}
 		
     return redirect('/nilai');

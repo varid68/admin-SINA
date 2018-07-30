@@ -17,7 +17,7 @@
 
     @foreach($result as $item)
     <div class="col-md-6">
-      <a href={{ url("hitungipk/$item->semester") }}>
+      <a href={{ url('hitungipk/'.urlencode($item->semester)) }}>
         <button type="button" class="btn btn-block bg-purple">Pilih Semester {{ $item->semester }}</button>
       </a>
     </div>

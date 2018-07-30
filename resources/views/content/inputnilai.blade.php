@@ -14,9 +14,7 @@
       <div class="alert alert-info alert-dismissible">
         <button type="button" id="close" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <ul>
-          <li>Nilai absensi diperoleh dari ((Masuk kuliah / 14) x 10 / 100) x 100</li>
-          <li>NIlai absensi max adalah 14 yang mana diperoleh dari jumlah pertemuan selama 1 semester</li>
-          <li>Nilai akhir = 10% absensi + 20% tugas + 30% UTS + 40% UAS</li>
+          <li>Nilai akhir = 20% tugas + 30% UTS + 50% UAS</li>
           <li>Nilai akhir akan muncul otomatis setelah field nilai absensi, tugas, UTS & UAS terisi semua-nya</li>
           <li>tekan <strong>enter</strong> untuk berpindah ke kolom berikutnya</li>
           <li>Silahkan click button <strong>submit</strong> untuk entry semua nilai</li>
@@ -33,11 +31,10 @@
             <tr>
               <th style="width: 3%">#</th>
               <th style="width: 10%">Nim</th>
-              <th style="width: 30%">Nama</th>
-              <th style="width: 11.25%">Absensi</th>
-              <th style="width: 11.25%">Tugas</th>
-              <th style="width: 11.25%">Uts</th>
-              <th style="width: 11.25%">Uas</th>
+              <th style="width: 42%">Nama</th>
+              <th style="width: 10%">Tugas</th>
+              <th style="width: 10%">Uts</th>
+              <th style="width: 10%">Uas</th>
               <th style="width: 10%">Nilai akhir</th>
             </tr>
             <form method="POST" action="{{ url('/input-nilai') }}">
@@ -49,16 +46,13 @@
               <td>{{ $item->nim }}</td>
               <td>{{ $item->nama }}</td>
               <td>
-                <input type="number" min="1" max="14" name="{{ $item->nim }}[absensi]" class="form-control input-sm input absensi" placeholder=".col-xs-3" required>
+                <input type="number" min="0" max="100" name="{{ $item->nim }}[tugas]" class="form-control input-sm input tugas" placeholder=".col-xs-3" required>
               </td>
               <td>
-                <input type="number" min="1" max="100" name="{{ $item->nim }}[tugas]" class="form-control input-sm input tugas" placeholder=".col-xs-3" required>
+                <input type="number" min="0" max="100" name="{{ $item->nim }}[uts]" class="form-control input-sm input uts" placeholder=".col-xs-3" required>
               </td>
               <td>
-                <input type="number" min="1" max="100" name="{{ $item->nim }}[uts]" class="form-control input-sm input uts" placeholder=".col-xs-3" required>
-              </td>
-              <td>
-                <input type="number" min="1" max="100" name="{{ $item->nim }}[uas]" class="form-control input-sm input uas" placeholder=".col-xs-3" required>
+                <input type="number" min="0" max="100" name="{{ $item->nim }}[uas]" class="form-control input-sm input uas" placeholder=".col-xs-3" required>
                 <input type="hidden" name="{{ $item->nim }}[nilai_akhir]" class="nilai-akhir">
               </td>
               <td class="grade">-----</td>
