@@ -1,6 +1,5 @@
 $(function () {
   let toggle = false;
-  let absensi = 0;
   let tugas = 0;
   let uts = 0;
   let uas = 0;
@@ -25,7 +24,7 @@ $(function () {
   }
 
   function calculateScore(thisObject) {
-    let finalScore = Math.round(absensi + tugas + uts + uas);
+    let finalScore = Math.round(tugas + uts + uas);
     let grade = getGrade(finalScore);
     let hasil = `${finalScore} (${grade})`;
     thisObject.parents('tr').find('.final-score').val(finalScore);
@@ -37,52 +36,44 @@ $(function () {
   });
 
   $('.btn-info').click(function () {
-    $('.absensi, .tugas, .uts, .uas').siblings().show();
-    $('.absensi, .tugas, .uts, .uas').hide();
+    $('.tugas, .uts, .uas').siblings().show();
+    $('.tugas, .uts, .uas').hide();
     $('.on-edit').hide();
     $('.btn-info').show();
 
     if (toggle) {
-      $(this).parents('tr').find('.absensi, .tugas, .uts, .uas').hide();
-      $(this).parents('tr').find('.absensi, .tugas, .uts, .uas').siblings().show();
+      $(this).parents('tr').find('.tugas, .uts, .uas').hide();
+      $(this).parents('tr').find('.tugas, .uts, .uas').siblings().show();
       $(this).show();
       $(this).siblings('.on-edit').hide();
       finalScoreHtml = null;
       toggle = false;
     } else {
-      $(this).parents('tr').find('.absensi, .tugas, .uts, .uas').show();
-      $(this).parents('tr').find('.absensi, .tugas, .uts, .uas').siblings().hide();
+      $(this).parents('tr').find('.tugas, .uts, .uas').show();
+      $(this).parents('tr').find('.tugas, .uts, .uas').siblings().hide();
       $(this).hide();
       $(this).siblings('.on-edit').show();
-      $(this).parents('tr').find('.absensi').focus();
       finalScoreHtml = $(this).parent().siblings('.nilai_akhir').html();
       toggle = true;
     }
   });
 
   $('.dismiss').click(function () {
-    $('.absensi, .tugas, .uts, .uas').siblings().show();
-    $('.absensi, .tugas, .uts, .uas').hide();
+    $('.tugas, .uts, .uas').siblings().show();
+    $('.tugas, .uts, .uas').hide();
     $('.on-edit').hide();
     $('.btn-info').show();
 
-    const absensi = $(this).parents('tr').find('.absensi').data('absensi');
     const tugas = $(this).parents('tr').find('.tugas').data('tugas');
     const uts = $(this).parents('tr').find('.uts').data('uts');
     const uas = $(this).parents('tr').find('.uas').data('uas');
     const finalScore = $(this).parents('tr').find('.final-score').data('final');
-    $(this).parents('tr').find('.absensi').val(absensi);
     $(this).parents('tr').find('.tugas').val(tugas);
     $(this).parents('tr').find('.uts').val(uts);
     $(this).parents('tr').find('.uas').val(uas);
     $(this).parents('tr').find('.final-score').val(finalScore);
     $(this).parents('tr').find('.nilai_akhir').html(finalScoreHtml);
     toggle = false;
-  });
-
-  $('.absensi').keyup(function (e) {
-    absensi = ((e.target.value / 14) * 10 / 100) * 100;
-    calculateScore($(this));
   });
 
   $('.tugas').keyup(function (e) {
@@ -96,7 +87,7 @@ $(function () {
   });
 
   $('.uas').keyup(function (e) {
-    uas = parseInt(40 / 100 * e.target.value);
+    uas = parseInt(50 / 100 * e.target.value);
     calculateScore($(this));
   });
 

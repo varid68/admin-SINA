@@ -115,7 +115,7 @@ class HitungIpsController extends Controller
     }
     
     $request->session()->put('ip', $list);
-    return view('content.hitungips', compact('list', 'semester', 'validasi'));
+    return view('content.hitungips', compact('list', 'semester', 'validasi', '_validasi'));
 
   }
 

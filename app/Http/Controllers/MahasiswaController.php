@@ -32,6 +32,7 @@ class MahasiswaController extends Controller
 
 
 	public function academic_board(Request $request, $nim) {
+		$isForPdf = $request->get('isForPdf');
 		$key = $request->session()->get('key');
 
 		$response = Curl::to('https://chylaceous-thin.000webhostapp.com/public/grade-point/'.$nim)
@@ -43,25 +44,39 @@ class MahasiswaController extends Controller
     ->get();
 
 		$list = [];
-		$ipk = $response->ipk;
 		$semester = ['I', 'II', 'Akselerasi I', 'III', 'IV', 'Akselerasi II'];
-
+		
 		foreach ($semester as $value){
 			foreach ((array) $response->final_scores as $key => $item){
 				if ($value == $item->semester){
 					$skala = ['skala' => $this->skala_nilai($item->nilai_akhir)];
-					$list[$value]['scores'][] = array_merge((array)$item, (array)$skala);
-				}
-			}
-
-			foreach ((array) $response->ips as $item){
-				if ($value == $item->semester){
-					$list[$value]['ips'] = $item->ip;
+					$bobot_nilai = ['bobot_nilai' => $this->bobot_nilai($item->nilai_akhir)];
+					$mutu = ['mutu' => $item->sks * $this->bobot_nilai($item->nilai_akhir)];
+					$list[$value][] = array_merge((array)$item, (array)$skala, (array)$bobot_nilai, (array)$mutu);
 				}
 			}
 		}
+			
+		$x = 0;
+		foreach ($response->final_scores as $value) {
+			$total_sks = $value->sks + $x;
+			$x = $total_sks;
+		}
 
-		return view('content.academic-board', compact('list', 'mahasiswa','ipk'));
+		$xx = 0;
+		foreach($list as $key => $item){
+			foreach($item as $value){
+				$total_mutu = $value['mutu'] + $xx;
+  	    $xx = $total_mutu;
+	    }
+		}
+
+		if ($isForPdf == 'true') {
+			$pdf = PDF::loadView('pdf.transkripnilai', compact('list', 'mahasiswa','total_mutu', 'total_sks'))->setPaper('f4','potrait');
+			return $pdf->stream('transkrip-nilai.pdf');
+		} else {
+			return view('content.academic-board', compact('list', 'mahasiswa','total_mutu', 'total_sks'));
+		}
 	}
 
 
@@ -99,7 +114,7 @@ class MahasiswaController extends Controller
 			})
 			->addColumn('action',function($response){
           return 
-						'<a href=academic-board/'.$response->nim.'>
+						'<a href=academic-board/'.$response->nim.'?isForPdf=false>
 							<button type="button" class="btn btn-sm btn-success" title="Klik untuk melihat semua nilai akademik">
 								<i class="fa fa-search"></i>
 							</button>
@@ -119,7 +134,7 @@ class MahasiswaController extends Controller
 			})
 			->addColumn('action',function($response){
           return
-						'<a href=academic-board/'.$response->nim.'>
+						'<a href=academic-board/'.$response->nim.'?isForPdf=false>
 							<button type="button" class="btn btn-sm btn-success" title="Klik untuk melihat semua nilai akademik">
 								<i class="fa fa-search"></i>
 							</button>
@@ -306,5 +321,21 @@ class MahasiswaController extends Controller
     else if ($nilai <= 50 && $nilai >= 40) $skala = 'D';
     else if ($nilai <= 39) $skala = 'E';
     return $skala;
+	}
+	
+
+	protected function bobot_nilai($nilai) {
+    $bobot = null;
+    if ($nilai <= 100 && $nilai >= 85) $bobot = 4.00;
+    else if ($nilai <= 84 && $nilai >= 80) $bobot = 3.75;
+    else if ($nilai <= 79 && $nilai >= 75) $bobot = 3.50;
+    else if ($nilai <= 74 && $nilai >= 70) $bobot = 3.00;
+    else if ($nilai <= 69 && $nilai >= 65) $bobot = 2.75;
+    else if ($nilai <= 64 && $nilai >= 60) $bobot = 2.50;
+    else if ($nilai <= 59 && $nilai >= 55) $bobot = 2.00;
+    else if ($nilai <= 54 && $nilai >= 50) $bobot = 1.75;
+    else if ($nilai <= 50 && $nilai >= 40) $bobot = 1.50;
+    else if ($nilai <= 39) $bobot = 1.00;
+    return $bobot;
   }
 }

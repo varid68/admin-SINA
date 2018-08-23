@@ -3,6 +3,7 @@ let _uts = 0;
 let _uas = 0;
 let _nilai_akhir = 0;
 
+
 $('#btn-modal-download').click(function () {
   window.location = '/nilai-pdf';
 });
@@ -27,7 +28,7 @@ $('a[href="#myModal"]').click(function () {
   $('#myModal').find('.skala-nilai').text(nilaiAkhir);
   _tugas = parseInt(20 / 100 * tugas);
   _uts = parseInt(30 / 100 * uts);
-  _uas = parseInt(40 / 100 * uas);
+  _uas = parseInt(50 / 100 * uas);
   _nilai_akhir = split[0];
 });
 

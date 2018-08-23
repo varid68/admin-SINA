@@ -37,13 +37,13 @@ class RemidialController extends Controller
 			
 			if ($counter == count($nilai)) {
 				$new = ["nim" => $item->nim, "nama" => $item->nama, "tugas" => 0, "uts" => 0,
-							"uas" => 0, "nilai_akhir" => 0, "grade" => "D"];
+							"uas" => 0, "nilai_akhir" => 0, "grade" => "E"];
 				array_push($list, $new);
 			}
 		}
 
 		$remidial = array_filter($list, function ($var) {
-    	return ($var["nilai_akhir"] <= 58);
+    	return ($var["nilai_akhir"] <= 50);
 		});
 
 		$request->session()->put('remidial', json_encode($remidial));

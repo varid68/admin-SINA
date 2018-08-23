@@ -49,6 +49,19 @@
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Indeks Prestasi mahasiswa semester <strong>{{ $semester }}</strong></h3>
+      <a href="#"
+        class="pull-right"
+        data-html="true"
+        title="validasi IPS"
+        data-trigger="hover"
+        data-placement="left"
+        data-toggle="popover"
+        data-content="
+          <p>MI  : {{ $_validasi[0]->MI or 'belum' }}</p>
+          <p>KA  : {{ $_validasi[0]->KA or 'belum' }}</p>
+        ">
+        <i class="fa fa-question-circle" style="font-size:18px" aria-hidden="true"></i>
+      </a>
     </div>
     <!-- /.box-header -->
     <div class="box-body no-padding">
@@ -152,5 +165,7 @@
     $('#myModal').on('hidden.bs.modal', function () {
       $('#tag').attr('href', url);
     });
+
+    $('[data-toggle="popover"]').popover();   
   </script>
 @endsection
